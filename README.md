@@ -6,6 +6,8 @@ Reusable multi-agent development configuration for [CodeBuddy Code](https://cnb.
 
 > **Compatibility**: Fully compatible with both CodeBuddy CLI and IDE. Sub-agents use the `Agent` tool which is available in both environments. Model differentiation (`coder-lite` → hy3, `coder-standard` → V4-Flash, etc.) works in CLI via the `model` parameter; IDE uses the panel model with agent instruction differentiation.
 
+> **Edition**: Default presets are best suited for **CodeBuddy Personal Standard Edition**. Other editions (e.g., Enterprise, Flagship) may offer different model availability — adjust model assignments via `beggar agent custom` to match your edition's available models before use.
+
 >
 
 ## Quick Start

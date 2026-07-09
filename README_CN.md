@@ -6,6 +6,8 @@
 
 > **兼容性**：同时兼容 CodeBuddy CLI 和 IDE。子 Agent 通过 `Agent` 工具调度，两种环境均可使用。模型差异化（`coder-lite` → hy3、`coder-standard` → V4-Flash 等）在 CLI 中通过 `model` 参数实现；IDE 使用主面板模型，以 Agent 指令差异化替代。
 
+> **版本适配**：默认预设套餐最佳适配 **CodeBuddy 个人标准版**。其他版本（如企业版、旗舰版等）可用模型可能不同，需根据各版本实际支持的模型通过 `beggar agent custom` 自定义配置后方可使用。
+
 >
 
 ## 快速开始
