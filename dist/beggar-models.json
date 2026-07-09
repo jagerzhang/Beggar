@@ -1,0 +1,691 @@
+{
+  "_meta": {
+    "description": "CodeBuddy Agent 可用模型列表与预设配置",
+    "compatibility": {
+      "_note": "模型 ID 在 CLI 和 IDE 中格式一致（kebab-case），IDE 面板仅显示友好名称。",
+      "ide_only_note": "部分新模型可能先在 IDE 上线后再同步到 CLI",
+      "inherit_mode": "设为 inherit 时跟随主面板选择，两端均兼容"
+    },
+    "updated_at": "2026-07-06",
+    "update_command": ".codebuddy/setup.sh models",
+    "leader_note": "主会话（Leader）模型由开发者通过 /model 命令自行选择。推荐：deepseek-v4-pro (x0.13, Agent Elo 1554, SWE-bench 80.6%) 或 kimi-k2.7 (x0.65, 编程专用强化, token-30%, 有效成本x0.455) 或 glm-5.2 (x1.06, Terminal-Bench 81%, 开源最强)。质量模式推荐 claude-opus-4.7-1m (x3.33, SWE-bench 87.6%)。"
+  },
+  "aliases": {
+    "_note": "IDE 显示名 / 简写 → 标准 model id。setup.sh agent custom <alias> 会自动解析。",
+    "opus": "claude-opus-4.8-1m",
+    "opus-4.8": "claude-opus-4.8-1m",
+    "opus-4.7": "claude-opus-4.7-1m",
+    "opus-4.6": "claude-opus-4.6-1m",
+    "sonnet": "claude-sonnet-4.6-1m",
+    "sonnet-4.6": "claude-sonnet-4.6-1m",
+    "haiku": "claude-haiku-4.5",
+    "gemini-pro": "gemini-3.1-pro",
+    "gemini-flash": "gemini-3.5-flash",
+    "deepseek": "deepseek-v3-2-volc",
+    "gpt": "gpt-5.4",
+    "codex": "gpt-5.3-codex",
+    "kimi": "kimi-k2.7",
+    "kimi-code": "kimi-k2.7",
+    "glm": "glm-5.2",
+    "hy3": "hy3",
+    "claude opus 4.8": "claude-opus-4.8",
+    "claude opus 4.8 1m": "claude-opus-4.8-1m",
+    "claude opus 4.7 1m": "claude-opus-4.7-1m",
+    "claude opus 4.7": "claude-opus-4.7",
+    "claude opus 4.6 1m": "claude-opus-4.6-1m",
+    "claude opus 4.6": "claude-opus-4.6",
+    "claude sonnet 4.6 1m": "claude-sonnet-4.6-1m",
+    "claude sonnet 4.6": "claude-sonnet-4.6",
+    "claude haiku 4.5": "claude-haiku-4.5",
+    "gemini 3.5 flash": "gemini-3.5-flash",
+    "gpt 5.5": "gpt-5.5",
+    "gpt 5.4": "gpt-5.4",
+    "gpt 5.3 codex": "gpt-5.3-codex",
+    "kimi k2.6": "kimi-k2.6",
+    "kimi k2.7 code": "kimi-k2.7",
+    "kimi k2.7": "kimi-k2.7",
+    "glm 5.2": "glm-5.2",
+    "glm 5v-turbo": "glm-5v-turbo",
+    "glm 5.1": "glm-5.1"
+  },
+  "models": {
+    "paid": {
+      "claude": [
+        {
+          "id": "claude-opus-4.8",
+          "tier": "top",
+          "cost": "x3.50",
+          "tags": [
+            "reasoning"
+          ],
+          "platform": [
+            "ide"
+          ],
+          "note": "IDE 先行"
+        },
+        {
+          "id": "claude-opus-4.8-1m",
+          "tier": "top",
+          "cost": "x3.50",
+          "tags": [
+            "reasoning",
+            "long-context"
+          ],
+          "platform": [
+            "ide"
+          ],
+          "note": "IDE 先行"
+        },
+        {
+          "id": "claude-opus-4.7-1m",
+          "tier": "top",
+          "cost": "x3.33",
+          "tags": [
+            "reasoning",
+            "long-context"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        },
+        {
+          "id": "claude-opus-4.7",
+          "tier": "top",
+          "cost": "x3.33",
+          "tags": [
+            "reasoning"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        },
+        {
+          "id": "claude-opus-4.6-1m",
+          "tier": "top",
+          "cost": "x3.33",
+          "tags": [
+            "reasoning",
+            "long-context"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        },
+        {
+          "id": "claude-opus-4.6",
+          "tier": "top",
+          "cost": "x3.33",
+          "tags": [
+            "reasoning"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        },
+        {
+          "id": "claude-sonnet-4.6-1m",
+          "tier": "mid",
+          "cost": "x2.00",
+          "tags": [
+            "general",
+            "long-context"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        },
+        {
+          "id": "claude-sonnet-4.6",
+          "tier": "mid",
+          "cost": "x2.00",
+          "tags": [
+            "general"
+          ],
+          "platform": [
+            "cli"
+          ]
+        },
+        {
+          "id": "claude-haiku-4.5",
+          "tier": "budget",
+          "cost": "x0.67",
+          "tags": [
+            "fast"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        }
+      ],
+      "gemini": [
+        {
+          "id": "gemini-3.5-flash",
+          "tier": "mid",
+          "cost": "x0.99",
+          "tags": [
+            "agent",
+            "tool-use",
+            "fast"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ],
+          "recommended_for": [
+            "tester"
+          ],
+          "note": "Terminal-Bench 76.2%最高, MCP Atlas 83.6%, Agent Elo 1656"
+        },
+        {
+          "id": "gemini-2.5-pro",
+          "tier": "mid",
+          "cost": "x0.90",
+          "tags": [
+            "reasoning"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ],
+          "note": "🚫 已弃用：CLI 频繁路由到不可用 region (us-south1)，不推荐用作 agent 模型。替代方案见各预设配置。"
+        },
+        {
+          "id": "gemini-3.1-pro",
+          "tier": "mid",
+          "cost": "x1.32",
+          "tags": [
+            "general"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        }
+      ],
+      "gpt": [
+        {
+          "id": "gpt-5.5",
+          "tier": "top",
+          "cost": "x3.31",
+          "tags": [
+            "general"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        },
+        {
+          "id": "gpt-5.4",
+          "tier": "top",
+          "cost": "x1.65",
+          "tags": [
+            "general"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        },
+        {
+          "id": "gpt-5.3-codex",
+          "tier": "mid",
+          "cost": "x1.25",
+          "tags": [
+            "code"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        },
+        {
+          "id": "gpt-5.1-codex",
+          "tier": "light",
+          "cost": "x0.90",
+          "tags": [
+            "code"
+          ],
+          "platform": [
+            "cli"
+          ]
+        },
+        {
+          "id": "gpt-5.1-codex-mini",
+          "tier": "budget",
+          "cost": "x0.18",
+          "tags": [
+            "code",
+            "fast"
+          ],
+          "platform": [
+            "cli"
+          ]
+        }
+      ],
+      "kimi": [
+        {
+          "id": "kimi-k2.7",
+          "tier": "mid",
+          "cost": "x0.65",
+          "tags": [
+            "code",
+            "agent",
+            "tool-use",
+            "long-context"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ],
+          "recommended_for": [
+            "leader",
+            "reviewer",
+            "reviewer-b",
+            "tester"
+          ],
+          "note": "K2.6的编程专用强化版。Kimi Code Bench v2 +21.8%、Program-Bench +11%、MLS Bench Lite +31.5%、Agent能力+10%、长程任务token消耗-30%（有效成本x0.455低于K2.6的x0.50）。SWE-bench Pro 58.6%基线+编码全面提升"
+        },
+        {
+          "id": "kimi-k2.6",
+          "tier": "mid",
+          "cost": "x0.50",
+          "tags": [
+            "agent",
+            "tool-use",
+            "long-context"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ],
+          "recommended_for": [
+            "leader",
+            "architect",
+            "reviewer",
+            "tester"
+          ],
+          "note": "已被K2.7超越，建议升级到kimi-k2.7"
+        }
+      ],
+      "glm": [
+        {
+          "id": "glm-5.2",
+          "tier": "top",
+          "cost": "x1.06",
+          "tags": [
+            "code",
+            "agent",
+            "reasoning",
+            "long-context"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ],
+          "recommended_for": [
+            "leader",
+            "architect",
+            "coder-senior",
+            "reviewer"
+          ],
+          "note": "开源最强文本模型。Terminal-Bench 81%, SWE-bench Pro 62.1%, FrontierSWE 74.4%(接近Opus4.8), Intelligence Index 51(开源最高), 1M context。比GLM-5.1质变级提升(Terminal +26pp)。Quality模式architect的性价比替代(省68% vs Opus)"
+        },
+        {
+          "id": "glm-5.1",
+          "tier": "mid",
+          "cost": "x0.90",
+          "tags": [
+            "code",
+            "agent"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ],
+          "note": "已被GLM-5.2大幅超越，建议升级"
+        },
+        {
+          "id": "glm-5v-turbo",
+          "tier": "light",
+          "cost": "x0.81",
+          "tags": [
+            "multimodal",
+            "code",
+            "tool-use"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ],
+          "recommended_for": [
+            "ui-coder",
+            "frontend"
+          ],
+          "note": "多模态视觉编程基座。Design2Code 94.8%(全场最高), BrowseComp-VL 51.9%(超Kimi/Opus), AndroidWorld 75.7%。适合设计稿→代码、UI截图分析、前端开发场景"
+        },
+        {
+          "id": "glm-5.0",
+          "tier": "light",
+          "cost": "x0.68",
+          "tags": [
+            "general"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        },
+        {
+          "id": "glm-4.7",
+          "tier": "budget",
+          "cost": "x0.23",
+          "tags": [
+            "general",
+            "fast"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        }
+      ],
+      "minimax": [
+        {
+          "id": "minimax-m2.7",
+          "tier": "budget",
+          "cost": "x0.19",
+          "tags": [
+            "general",
+            "fast"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        },
+        {
+          "id": "minimax-m2.5",
+          "tier": "budget",
+          "cost": "x0.13",
+          "tags": [
+            "general",
+            "fast"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ]
+        }
+      ],
+      "deepseek": [
+        {
+          "id": "deepseek-v4-pro",
+          "tier": "mid",
+          "cost": "x0.13",
+          "tags": [
+            "code",
+            "agent",
+            "reasoning",
+            "long-context"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ],
+          "recommended_for": [
+            "coder-senior",
+            "coder-standard",
+            "leader",
+            "architect",
+            "reviewer"
+          ],
+          "note": "SWE-bench 80.6%, LiveCodeBench 93.5%, 1M context, 48%降价后性价比极高"
+        },
+        {
+          "id": "deepseek-v4-flash",
+          "tier": "budget",
+          "cost": "x0.05",
+          "tags": [
+            "code",
+            "fast",
+            "long-context"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ],
+          "recommended_for": [
+            "coder-standard",
+            "coder-lite"
+          ],
+          "note": "SWE-bench 79.0%, 1M context, 62%降价后x0.05极低价格"
+        },
+        {
+          "id": "deepseek-v3-2-volc",
+          "tier": "budget",
+          "cost": "x0.15",
+          "tags": [
+            "general"
+          ],
+          "platform": [
+            "cli",
+            "ide"
+          ],
+          "note": "旧版，建议升级到 V4"
+        }
+      ]
+    },
+    "free": [
+      {
+        "id": "hy3",
+        "tier": "free",
+        "cost": "x0.00",
+        "tags": [
+          "general",
+          "agent",
+          "reasoning"
+        ],
+        "platform": [
+          "cli",
+          "ide"
+        ],
+        "recommended_for": [
+          "coder-lite",
+          "tester",
+          "recorder"
+        ],
+        "note": "SWE-bench Verified 78.0%、GPQA 90.4%、ClawEval 68.5，编码/推理/Agent能力比肩2-5倍参数旗舰；WorkBuddy任务成功率90%，适合审查/测试/归档"
+      },
+      {
+        "id": "kimi-k2.5",
+        "tier": "free",
+        "cost": "x0.00",
+        "tags": [
+          "general",
+          "agent"
+        ],
+        "platform": [
+          "cli",
+          "ide"
+        ],
+        "recommended_for": [
+          "tester"
+        ]
+      },
+      {
+        "id": "hunyuan-2.0-thinking",
+        "tier": "free",
+        "cost": "x0.00",
+        "tags": [
+          "reasoning"
+        ],
+        "platform": [
+          "cli",
+          "ide"
+        ]
+      }
+    ]
+  },
+  "presets": {
+    "economic": {
+      "description": "经济模式：V4-Pro 架构设计+复杂代码(x0.13) + V4-Flash 常规代码(x0.05) + 双免费 reviewer + Hy3 测试（节省 >96%）",
+      "estimated_avg_cost": "x0.05",
+      "platform": "both",
+      "leader_model": "kimi-k2.7",
+      "leader_note": "Leader 推荐：deepseek-v4-pro (x0.13, Agent Elo 1554, SWE-bench 80.6%) 或 kimi-k2.7 (x0.65, 编程专用强化, token-30%)。V4-Pro 新降价后性价比极高。",
+      "config": {
+        "architect": "deepseek-v4-pro",
+        "coder-senior": "deepseek-v4-pro",
+        "coder-standard": "deepseek-v4-flash",
+        "coder-lite": "hy3",
+        "reviewer": "hy3",
+        "reviewer-b-model": "hunyuan-2.0-thinking",
+        "tester": "hy3",
+        "recorder": "hy3",
+        "goal-evaluator": "kimi-k2.5",
+        "director": "claude-opus-4.6-1m"
+      }
+    },
+    "balanced": {
+      "description": "平衡模式（推荐）：GLM-5.2 架构设计 + V4 代码生成(x0.05~0.13) + K2.7 Code 测试/辅审 + 三厂商覆盖（节省 >90%）",
+      "estimated_avg_cost": "x0.29",
+      "platform": "both",
+      "leader_model": "deepseek-v4-pro",
+      "leader_note": "Leader 推荐：deepseek-v4-pro (x0.13, Agent Elo 1554) 或 kimi-k2.7 (x0.65, 编程专用强化) 或 glm-5.2 (x1.06, Terminal-Bench 81%)。architect 已升级到 GLM-5.2，Terminal-Bench 81% 远超 V4-Pro 67.9%。",
+      "config": {
+        "architect": "glm-5.2",
+        "coder-senior": "deepseek-v4-pro",
+        "coder-standard": "deepseek-v4-flash",
+        "coder-lite": "hy3",
+        "reviewer": "deepseek-v4-pro",
+        "reviewer-b-model": "kimi-k2.7",
+        "tester": "kimi-k2.7",
+        "recorder": "hy3",
+        "goal-evaluator": "claude-haiku-4.5",
+        "director": "claude-opus-4.7-1m"
+      }
+    },
+    "quality": {
+      "description": "质量优先：Opus 编排 + Sonnet/V4-Pro 代码 + 双 reviewer (K2.7 Code主审+DeepSeek辅审) + 3.5-Flash 测试（节省 >60%）",
+      "estimated_avg_cost": "x1.05",
+      "platform": "both",
+      "platform_note": "主会话用 claude-opus-4.7-1m。双 reviewer 跨厂商审查（Kimi + DeepSeek）。tester 用 Gemini-3.5-Flash（Terminal-Bench 76.2%最高）。",
+      "leader_model": "claude-opus-4.7-1m",
+      "config": {
+        "architect": "claude-opus-4.7-1m",
+        "coder-senior": "claude-sonnet-4.6-1m",
+        "coder-standard": "deepseek-v4-pro",
+        "coder-lite": "deepseek-v4-flash",
+        "reviewer": "kimi-k2.7",
+        "reviewer-b-model": "deepseek-v4-pro",
+        "tester": "gemini-3.5-flash",
+        "recorder": "claude-haiku-4.5",
+        "goal-evaluator": "claude-haiku-4.5",
+        "director": "claude-opus-4.7-1m"
+      }
+    }
+  },
+  "agent_roles": {
+    "architect": {
+      "description": "方案设计与质量管控",
+      "priority": "critical",
+      "token_share": "15%",
+      "note": "Leader 承担部分编排职责后 architect 占比下降"
+    },
+    "coder-senior": {
+      "description": "复杂代码实现（架构/安全/并发）",
+      "priority": "high",
+      "token_share": "15%"
+    },
+    "coder-standard": {
+      "description": "常规业务代码实现",
+      "priority": "high",
+      "token_share": "25%"
+    },
+    "coder-lite": {
+      "description": "简单代码实现（CRUD/配置/模板复制）",
+      "priority": "medium",
+      "token_share": "15%"
+    },
+    "reviewer": {
+      "description": "代码审查（双 reviewer 并行：reviewer 主审实现可行性，reviewer-b 辅审技术合理性）",
+      "priority": "high",
+      "token_share": "15%",
+      "note": "reviewer-b-model 在预设中定义第二个 reviewer 使用的模型，由 beggar-workflow 在评审时自动调用"
+    },
+    "tester": {
+      "description": "测试运行与验证",
+      "priority": "medium",
+      "token_share": "10%"
+    },
+    "recorder": {
+      "description": "知识沉淀与归档",
+      "priority": "low",
+      "token_share": "5%"
+    },
+    "goal-evaluator": {
+      "description": "独立目标验证评估者，读取验证报告做 yes/no 判定",
+      "priority": "medium",
+      "token_share": "2%",
+      "note": "用轻量模型（Haiku/hy3）做独立判定，避免 Leader 自判偏差。每轮迭代仅调用 1 次"
+    },
+    "director": {
+      "description": "隐藏升级裁决 Agent，仅在 3 轮审查全败时激活",
+      "model_note": "统一使用最强推理模型 claude-opus-4.7-1m，做根因分析和最终裁决",
+      "trigger": "3 轮 coder 全败 + Leader 根因分析后仍无法自行解决时激活一次"
+    }
+  },
+  "complexity_routing": {
+    "_note": "Leader 根据以下规则判断任务复杂度并分派对应 coder",
+    "coder-lite": [
+      "纯配置修改（env, json, yaml, toml）",
+      "单字段增删改（CRUD 操作的单个字段）",
+      "复制已有模式的重复代码",
+      "修改常量、文案、样式值",
+      "添加已有模板的 API route",
+      "单行 bug 修复（逻辑明确）"
+    ],
+    "coder-standard": [
+      "常规业务功能实现（有 design.md）",
+      "非架构性 bug 修复",
+      "新 API endpoint + 业务逻辑",
+      "编写/更新单元测试",
+      "前端新页面/组件（有参照）",
+      "数据库迁移脚本"
+    ],
+    "coder-senior": [
+      "架构变更或新模式引入",
+      "跨模块/跨子项目联动修改",
+      "性能优化、并发/分布式逻辑",
+      "安全相关（认证、加密、权限）",
+      "无先例的新功能",
+      "低级 coder 2轮 review 未通过的升级任务"
+    ]
+  },
+  "review_gate": {
+    "_note": "Review 升级机制：coder 产出未通过 reviewer 时自动升级。3轮失败后进入应急处理而非直接抛给用户",
+    "max_rounds": 3,
+    "escalation": "coder-lite → coder-standard → coder-senior → 【Leader 根因分析】",
+    "self_fix_before_escalation": 2,
+    "self_fix_note": "编译/测试失败时同级 coder 先尝试自修复2次，超过才升级",
+    "emergency_handling": {
+      "trigger": "3 轮 review 都未通过（lite + standard + senior 均失败）",
+      "leader_actions": [
+        "根因分析：读取3轮实现报告+reviewer意见，判断失败类型",
+        "设计缺陷 → architect 重新评估（最多1次修正机会）",
+        "任务过大 → 拆分为更小的子任务（每个子任务独立3轮）",
+        "reviewer 误判 → Leader 仲裁，接受实现并记录误判",
+        "需求不清 → 向用户澄清，基于新理解重新分派",
+        "环境问题 → 跳过环境阻塞，标记为已知问题",
+        "能力天花板 → 用户裁决（最终兜底）"
+      ]
+    }
+  }
+}

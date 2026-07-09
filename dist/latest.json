@@ -1,0 +1,9 @@
+{
+  "version": "2.8.6",
+  "url": "https://github.com/jagerzhang/beggar/releases/latest/download/beggar-v2.8.6.tar.gz",
+  "sha256": "",
+  "skill_url": "https://github.com/jagerzhang/beggar/releases/latest/download/beggar-skill.zip",
+  "skill_sha256": "",
+  "release_date": "2026-07-09",
+  "release_notes": "Public release - adapted for CodeBuddy public version"
+}

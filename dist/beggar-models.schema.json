@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Beggar Models Configuration Schema",
+  "description": "Schema for beggar model configuration file",
+  "type": "object",
+  "required": ["_meta", "aliases", "models", "presets"],
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "required": ["description"],
+      "properties": {
+        "description": {"type": "string"},
+        "compatibility": {"type": "object"},
+        "updated_at": {"type": "string"},
+        "update_command": {"type": "string"},
+        "leader_note": {"type": "string"}
+      }
+    },
+    "aliases": {
+      "type": "object",
+      "description": "IDE display name / shorthand → standard model id mapping",
+      "additionalProperties": {"type": "string"}
+    },
+    "models": {
+      "type": "object",
+      "required": ["paid", "free"],
+      "properties": {
+        "paid": {
+          "type": "object",
+          "description": "Paid models grouped by vendor",
+          "additionalProperties": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/model"}
+          }
+        },
+        "free": {
+          "type": "array",
+          "description": "Free models",
+          "items": {"$ref": "#/definitions/model"}
+        }
+      }
+    },
+    "presets": {
+      "type": "object",
+      "description": "Preset configurations (economic/balanced/quality)",
+      "additionalProperties": {"$ref": "#/definitions/preset"}
+    },
+    "agent_roles": {
+      "type": "object",
+      "description": "Agent role descriptions and token share",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "description": {"type": "string"},
+          "priority": {"type": "string", "enum": ["critical", "high", "medium", "low"]},
+          "token_share": {"type": "string"},
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "complexity_routing": {
+      "type": "object",
+      "description": "Leader task complexity routing rules",
+      "properties": {
+        "_note": {"type": "string"}
+      },
+      "additionalProperties": {
+        "type": "array",
+        "items": {"type": "string"}
+      }
+    },
+    "review_gate": {
+      "type": "object",
+      "description": "Review escalation mechanism",
+      "properties": {
+        "max_rounds": {"type": "integer", "minimum": 1},
+        "escalation": {"type": "string"},
+        "self_fix_before_escalation": {"type": "integer", "minimum": 0},
+        "emergency_handling": {"type": "object"}
+      }
+    }
+  },
+  "definitions": {
+    "model": {
+      "type": "object",
+      "required": ["id", "tier", "cost", "tags", "platform"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "tier": {"type": "string", "enum": ["top", "mid", "light", "budget", "free"]},
+        "cost": {"type": "string", "pattern": "^x[0-9]+\\.?[0-9]*$"},
+        "tags": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "platform": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["cli", "ide"]},
+          "minItems": 1
+        },
+        "recommended_for": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "note": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "preset": {
+      "type": "object",
+      "required": ["description", "config"],
+      "properties": {
+        "description": {"type": "string"},
+        "estimated_avg_cost": {"type": "string"},
+        "platform": {"type": "string", "enum": ["both", "cli", "ide"]},
+        "platform_note": {"type": "string"},
+        "leader_model": {"type": "string"},
+        "leader_note": {"type": "string"},
+        "config": {
+          "type": "object",
+          "required": ["architect", "coder-senior", "coder-standard", "coder-lite", "reviewer", "tester", "recorder"],
+          "properties": {
+            "architect": {"type": "string"},
+            "coder-senior": {"type": "string"},
+            "coder-standard": {"type": "string"},
+            "coder-lite": {"type": "string"},
+            "reviewer": {"type": "string"},
+            "reviewer-b-model": {"type": "string"},
+            "tester": {"type": "string"},
+            "recorder": {"type": "string"}
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,8 @@
+tools/rtk
+*.pyc
+__pycache__/
+
+# Local extensions — third-party projects add custom agents/rules/skills here.
+# These files are not tracked by the upstream .codebuddy repo and survive updates.
+local/
+notify.json

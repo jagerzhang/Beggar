@@ -1,0 +1,203 @@
+---
+description: Coder Guard 降级保护规则。Leader 在分派 coder 前查询降级记录，recorder 在 coder 失败后更新记录。
+globs: ["**/*"]
+alwaysApply: true
+enabled: true
+---
+
+# Coder Guard 降级保护规则
+
+> 适用范围：Leader Agent 在分派 coder 前读取；recorder Agent 在 coder 失败后更新
+
+## 核心规则
+
+**Leader 在分派 coder 前，必须查询 `memory/coder-guard.json` 中的降级保护记录。**
+
+如果某 coder 在某标签上最近 N 次有 ≥M 次失败，则直接跳过该 coder，分派给升级目标。
+
+## 查询路径
+
+运行时数据存储在 Leader 的 memory 目录中（不提交到 git）：
+```
+$HOME/.codebuddy/projects/<project-name>/memory/coder-guard.json
+```
+
+## 阈值配置
+
+| Coder | 连续失败阈值 | 观察窗口 | 升级目标 |
+|-------|-------------|---------|---------|
+| `coder-lite` | 2 | 最近 5 次 | `coder-standard` |
+| `coder-standard` | 2 | 最近 5 次 | `coder-senior` |
+| `coder-senior` | 2 | 最近 5 次 | `Leader 根因分析` |
+
+## 任务标签体系
+
+Leader 给每个任务打 1-3 个标签（从下方选取）：
+
+| 标签 | 说明 | 典型场景 |
+|------|------|---------|
+| `config_edit` | 纯配置文件修改 | `.env`、`.json`、`.yaml`、`.toml`、SQL 初始化脚本 |
+| `crud_field` | 单字段增删改查 | 数据库字段、API 字段、UI 表单字段 |
+| `copy_pattern` | 复制已有模式 | 新增 endpoint 用已有 handler/service 模板 |
+| `api_endpoint` | API endpoint | 新增/修改 handler、路由、DTO |
+| `ui_component` | UI 组件/页面 | Vue/React 组件、页面、样式 |
+| `cross_module` | 跨模块改动 | ≥2 个子项目或模块联动修改 |
+| `security_related` | 安全相关 | 认证、加密、权限、token、签名、鉴权 |
+| `concurrency` | 并发/分布式 | goroutine、channel、mutex、分布式锁 |
+| `performance` | 性能优化 | 缓存、索引、批处理、异步、连接池 |
+| `database` | 数据库相关 | schema 变更、migration、复杂查询优化 |
+| `test_only` | 仅编写测试 | 单元测试、集成测试、mock |
+| `docs_only` | 仅文档修改 | README、注释、CHANGELOG、设计文档 |
+| `refactor` | 重构 | 不修改外部行为，仅内部结构调整 |
+| `bugfix_simple` | 简单 bug 修复 | 逻辑明确、范围局限、单文件 |
+| `bugfix_complex` | 复杂 bug 修复 | 根因不清、跨文件、需深入调查 |
+
+## Leader 查询流程
+
+```
+1. 分析任务 → 打标签（如 [api_endpoint, cross_module]）
+2. 查 memory/coder-guard.json:
+   对 planned_coder 的每个标签：
+     该标签最近 5 次记录中失败次数 ≥ 2？
+     → 是：触发降级保护，跳过 planned_coder
+3. 如果触发保护，改用升级目标 coder
+4. 在 Agent prompt 中附上标签信息（帮助 coder 理解任务复杂度预期）
+```
+
+## Recorder 更新流程
+
+```
+1. coder 完成（成功/失败）
+2. 判断是否需要记录：
+   a. 失败 agent 不是 coder（coder-lite/coder-standard/coder-senior）→ 不记录，结束
+   b. 失败原因属于「排除原因」（见下方）→ 不记录，结束
+   c. 失败是代码质量问题（review_rejected, test_failed, logic_error）→ 继续记录
+3. 读取 memory/coder-guard.json
+4. 追加记录：
+   {
+     "timestamp": "ISO8601",
+     "coder": "coder-lite",
+     "tags": ["api_endpoint", "cross_module"],
+     "result": "review_rejected",
+     "escalated_to": "coder-standard"
+   }
+   更新 summary（按 coder + tag 的计数）
+5. 如果成功：
+   也追加记录（result: "success"），用于平衡统计
+```
+
+## 排除原因（不计入失败）
+
+以下失败**不**计入 coder-guard 统计：
+
+### 1. 非 coder agent
+- reviewer、tester、recorder、architect、explorer 等任何非 `coder-*` agent
+
+### 2. 模型/基础设施错误（与 coder 能力无关）
+- HTTP 400/429/500/503 等模型服务端错误
+- `service info not found`
+- `rate limit exceeded`
+- `timeout`、`network error`
+- 模型上下文长度超限
+
+### 3. 系统/工具限制
+- `tool_limitation`（agent 被分配了不完整的工具集）
+- `max_turns_exceeded`（如果确认是系统限制而非代码反复出错导致）
+
+### 4. 外部环境问题
+- 测试框架/环境配置问题导致的 `test_failed`
+- 外部依赖（数据库、API、npm 仓库）不可用
+- 网络问题导致无法下载依赖
+
+### 5. 其他非代码质量原因
+- 需求变更导致的设计返工
+- 用户主动取消或中断
+
+## 判断方法
+
+Recorder 在更新前检查 `result` 字段：
+- **计入失败**：`review_rejected`, `test_failed`, `logic_error`, `syntax_error`, `type_error`
+- **不计入**：`tool_limitation`, `max_turns_exceeded`, `model_error`, `infra_error`, `timeout`, `cancelled`
+
+## 降级保护示例
+
+**场景 A：lite 被反复打回**
+```
+历史记录（coder-lite, tag=api_endpoint）：
+  1. success
+  2. review_rejected → escalated to standard
+  3. success
+  4. review_rejected → escalated to standard
+  5. review_rejected → escalated to standard
+
+→ 最近 5 次中 3 次失败，≥ 阈值 2
+→ 下次 tag=api_endpoint 的任务直接跳过 lite，分派给 standard
+```
+
+**场景 B：standard 也不行了**
+```
+历史记录（coder-standard, tag=cross_module）：
+  1. success
+  2. review_rejected → escalated to senior
+  3. review_rejected → escalated to senior
+
+→ 最近 5 次中 2 次失败，≥ 阈值 2
+→ 下次 tag=cross_module 的任务直接跳过 standard，分派给 senior
+```
+
+**场景 C：senior 也挂了**
+```
+历史记录（coder-senior, tag=security_related）：
+  1. review_rejected → escalated to Leader
+  2. review_rejected → escalated to Leader
+
+→ 最近 5 次中 2 次失败
+→ 说明设计本身可能有问题，触发 Leader 根因分析流程
+```
+
+**场景 D：所有 coder 被 guard 拦截（穿透规则）**
+```
+历史记录：
+  - coder-lite tag=cross_module: 5次中3次失败 → 跳过
+  - coder-standard tag=cross_module: 5次中3次失败 → 跳过
+  - coder-senior tag=cross_module: 5次中2次失败 → 跳过
+
+→ 3 个 coder 全部被 guard 拦截，无可用 coder
+→ 穿透规则：取失败次数最少的 coder（此处为 senior 的 2 次），使用该 coder 执行
+```
+
+## 标签选择指南（给 Leader）
+
+**简单任务（预期 lite）**：
+- 只涉及 `config_edit`、`crud_field`、`copy_pattern`、`docs_only`
+
+**中等任务（预期 standard）**：
+- 涉及 `api_endpoint`、`ui_component`、`test_only`、`bugfix_simple`、`refactor`
+
+**复杂任务（预期 senior）**：
+- 涉及 `cross_module`、`security_related`、`concurrency`、`performance`、`database`、`bugfix_complex`
+
+**多标签任务**：
+- 打最重要的 1-3 个标签
+- 如果有 `security_related` 或 `cross_module`，即使其他标签简单也要提升级别
+
+## 文件格式（memory/coder-guard.json）
+
+```json
+{
+  "history": [
+    {
+      "timestamp": "2026-06-02T12:00:00Z",
+      "coder": "coder-lite",
+      "tags": ["api_endpoint"],
+      "result": "review_rejected",
+      "escalated_to": "coder-standard"
+    }
+  ],
+  "summary": {
+    "coder-lite": {
+      "api_endpoint": {"total": 5, "success": 2, "failure": 3}
+    }
+  }
+}
+```

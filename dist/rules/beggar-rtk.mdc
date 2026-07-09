@@ -1,0 +1,43 @@
+---
+description: RTK Token 优化工具说明（可选）。如已安装 RTK，PreToolUse hook 会自动转换 bash 命令，agent 无需显式使用 rtk 前缀。
+alwaysApply: false
+enabled: true
+updatedAt: 2026-06-12T00:00:00.000Z
+provider: 
+---
+
+# RTK Token Optimization（可选）
+
+RTK 是一个 CLI 代理工具，能将命令输出压缩 60-90%，显著节省 LLM token 消耗。
+
+## 使用方式
+
+**推荐做法：直接写原生命令**。如果 RTK 已安装且 beggar 已注入 PreToolUse hook，`rtk hook claude` 会自动将 bash 命令转换为 rtk 等价命令（如 `git status` → `rtk git status`），对 agent 完全透明。
+
+**无需**在命令前手动加 `rtk` 前缀。
+
+## 何时需要显式使用 rtk
+
+以下场景可直接使用 rtk 命令（如果 rtk 在 PATH 中）：
+
+- `rtk gain` — 查看 token 节省统计
+- `rtk gain --history` — 查看命令使用历史
+- `rtk discover` — 分析历史会话中错过的 rtk 优化机会
+- `rtk proxy <cmd>` — 执行原生命令（不压缩，用于调试）
+
+## 内置工具优先
+
+以下场景必须使用 CodeBuddy Code 内置工具，禁止走终端：
+- 读文件 → `Read`（支持 offset/limit 精确控制）
+- 搜索内容 → `Grep`（基于 ripgrep，支持上下文）
+- 查找文件 → `Glob`（模式匹配）
+- 编辑文件 → `Edit` / `Write`
+
+## 回退机制
+
+如果 RTK 压缩后的输出丢失关键细节，可用原生命令重试：
+1. 分析结果不符合预期时
+2. 需要精确数值/完整内容时
+3. 怀疑 RTK 过滤掉了关键错误信息时
+
+**原则：先让 hook 自动处理，信息不够时再用原生命令，不要在不完整的信息上反复猜测。**
