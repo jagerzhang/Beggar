@@ -755,7 +755,7 @@ os.replace(tmp.name, active_file)
         echo ""
         echo -e "  ${YELLOW}⚠ 全局安装注意事项：${NC}"
         echo -e "    首次进入项目目录时，CLI 可能触发重新初始化并重置面板模型。"
-        echo -e "    请在进入项目后手动切换面板模型：${YELLOW}/model glm-5.1${NC}（或你需要的模型）"
+echo -e "    请在进入项目后手动切换面板模型：${YELLOW}/model glm-5.2${NC}（或你需要的模型）"
         echo -e "    beggar 仅管理子 Agent 模型，面板（Leader）模型需开发者自行切换。"
     fi
     echo -e "    运行 ${CYAN}beggar quickstart${NC} 重新进入配置向导"

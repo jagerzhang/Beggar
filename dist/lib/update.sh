@@ -330,23 +330,22 @@ EOF
         local target="$1"
         [[ -f "$target" ]] || return 0
         sed -i.bak \
-            -e 's/kimi-k2\.7/kimi-k2.6/g' \
-            -e 's/glm-5\.2/glm-5.1/g' \
-            -e 's/claude-haiku-4\.5/kimi-k2.5/g' \
-            -e 's/claude-opus-4\.7-1m/glm-5.1/g' \
-            -e 's/claude-opus-4\.6-1m/glm-5.1/g' \
-            -e 's/claude-opus-4\.7/glm-5.1/g' \
-            -e 's/claude-opus-4\.6/glm-5.1/g' \
+            -e 's/claude-haiku-4\.5/hy3/g' \
+            -e 's/claude-opus-4\.7-1m/glm-5.2/g' \
+            -e 's/claude-opus-4\.6-1m/glm-5.2/g' \
+            -e 's/claude-opus-4\.7/glm-5.2/g' \
+            -e 's/claude-opus-4\.6/glm-5.2/g' \
             -e 's/claude-sonnet-4\.6-1m/deepseek-v4-pro/g' \
             -e 's/claude-sonnet-4\.6/deepseek-v4-pro/g' \
-            -e 's/gemini-3\.5-flash/kimi-k2.6/g' \
-            -e 's/gemini-3\.1-pro/kimi-k2.6/g' \
-            -e 's/gemini-2\.5-pro/kimi-k2.6/g' \
+            -e 's/gemini-3\.5-flash/kimi-k2.7/g' \
+            -e 's/gemini-3\.1-pro/kimi-k2.7/g' \
+            -e 's/gemini-2\.5-pro/kimi-k2.7/g' \
             -e 's/gpt-5\.5/deepseek-v4-pro/g' \
             -e 's/gpt-5\.4/deepseek-v4-pro/g' \
             -e 's/gpt-5\.3-codex/deepseek-v4-pro/g' \
             -e 's/gpt-5\.1-codex-mini/deepseek-v4-flash/g' \
-            -e 's/hunyuan-2\.0-thinking/kimi-k2.5/g' \
+            -e 's/hunyuan-2\.0-thinking/hy3/g' \
+            -e 's/kimi-k2\.5/hy3/g' \
             "$target" 2>/dev/null
         rm -f "${target}.bak" 2>/dev/null
     }
@@ -629,23 +628,22 @@ EOF
         local target="$1"
         [[ -f "$target" ]] || return 0
         sed -i.bak \
-            -e 's/kimi-k2\.7/kimi-k2.6/g' \
-            -e 's/glm-5\.2/glm-5.1/g' \
-            -e 's/claude-haiku-4\.5/kimi-k2.5/g' \
-            -e 's/claude-opus-4\.7-1m/glm-5.1/g' \
-            -e 's/claude-opus-4\.6-1m/glm-5.1/g' \
-            -e 's/claude-opus-4\.7/glm-5.1/g' \
-            -e 's/claude-opus-4\.6/glm-5.1/g' \
+            -e 's/claude-haiku-4\.5/hy3/g' \
+            -e 's/claude-opus-4\.7-1m/glm-5.2/g' \
+            -e 's/claude-opus-4\.6-1m/glm-5.2/g' \
+            -e 's/claude-opus-4\.7/glm-5.2/g' \
+            -e 's/claude-opus-4\.6/glm-5.2/g' \
             -e 's/claude-sonnet-4\.6-1m/deepseek-v4-pro/g' \
             -e 's/claude-sonnet-4\.6/deepseek-v4-pro/g' \
-            -e 's/gemini-3\.5-flash/kimi-k2.6/g' \
-            -e 's/gemini-3\.1-pro/kimi-k2.6/g' \
-            -e 's/gemini-2\.5-pro/kimi-k2.6/g' \
+            -e 's/gemini-3\.5-flash/kimi-k2.7/g' \
+            -e 's/gemini-3\.1-pro/kimi-k2.7/g' \
+            -e 's/gemini-2\.5-pro/kimi-k2.7/g' \
             -e 's/gpt-5\.5/deepseek-v4-pro/g' \
             -e 's/gpt-5\.4/deepseek-v4-pro/g' \
             -e 's/gpt-5\.3-codex/deepseek-v4-pro/g' \
             -e 's/gpt-5\.1-codex-mini/deepseek-v4-flash/g' \
-            -e 's/hunyuan-2\.0-thinking/kimi-k2.5/g' \
+            -e 's/hunyuan-2\.0-thinking/hy3/g' \
+            -e 's/kimi-k2\.5/hy3/g' \
             "$target" 2>/dev/null
         rm -f "${target}.bak" 2>/dev/null
     }

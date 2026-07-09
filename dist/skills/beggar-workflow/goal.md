@@ -258,11 +258,11 @@ stop_after_minutes: null
   ```
 - **description**："审定目标"
 
-> **模型由 frontmatter 决定**：Director 的模型由 `director.md` frontmatter 的 `model` 字段决定，该字段在预设切换时由 `set_agent_model()` 自动写入（balanced/quality → glm-5.1，economic → glm-5.1）。**调用时不再传 `model` 参数**，避免与预设配置冲突。用户可通过 `beggar agent custom director <model>` 自定义。
+> **模型由 frontmatter 决定**：Director 的模型由 `director.md` frontmatter 的 `model` 字段决定，该字段在预设切换时由 `set_agent_model()` 自动写入（balanced/quality → glm-5.2，economic → glm-5.2）。**调用时不再传 `model` 参数**，避免与预设配置冲突。用户可通过 `beggar agent custom director <model>` 自定义。
 
 > **调用后置位**：Director 返回后，执行 `python3 ${HOME}/.codebuddy/skills/beggar-workflow/beggar-state.py post-call --step "0.4" --agent "director" --lock director_target_review_done --task "目标审定"`（自动递增 agent_calls_used、设置状态锁、追加 dispatch log）。
 
-> **成本说明**：Director 绑定 glm-5.1（公网版最强可用推理模型），但目标定义阶段仅调用 1 次，token 消耗可控（约几千 token）。目标定义的质量直接决定整个 Loop 的成败，这笔投入属于高杠杆决策。
+> **成本说明**：Director 绑定 glm-5.2（公网版最强可用推理模型），但目标定义阶段仅调用 1 次，token 消耗可控（约几千 token）。目标定义的质量直接决定整个 Loop 的成败，这笔投入属于高杠杆决策。
 
 #### Step 0.5: 进入首轮 Pipeline
 
@@ -392,7 +392,7 @@ Agent({
 
 > **调用后置位**：goal-evaluator 返回后，执行 `python3 ${HOME}/.codebuddy/skills/beggar-workflow/beggar-state.py post-call --step "6.5.1" --agent "goal-evaluator" --lock evaluator_done --extra '{"evaluator_verdict":"<verdict>","evaluator_confidence":"<confidence>","evaluator_reason":"<reason>"}' --task "独立判定"`（自动递增 agent_calls_used、设置状态锁、写入判定字段、追加 dispatch log）。
 
-> **模型独立性**：goal-evaluator 默认使用 kimi-k2.5（balanced/quality 预设）或 kimi-k2.5（economic 预设），确保与 Leader 模型不同，避免同模型自判。
+> **模型独立性**：goal-evaluator 默认使用 hy3（公网版唯一免费模型），确保与 Leader 模型不同厂商，避免同模型自判。
 
 #### Step 6.6: 判定与流转
 
@@ -511,7 +511,7 @@ Director 输出处理：
 | 【通过】 | → 归档完成 |
 | 【驳回】 | Leader 将驳回问题转化为新 tasks，按差距分析流程处理。差距类型取 Director 建议或默认"实现不完整" |
 
-> **成本说明**：启用 `director_final_review` 后，每轮"Leader 判定达成"都会调用一次 Director。典型 2-3 轮迭代的 Goal Loop 中，Director 终审调用 1-3 次（可能前几次被驳回）。每次约 4-8K tokens（x0.90 倍率），总增量约 5-15%。Director max_turns 已限制为 15，禁止使用 Agent 工具派生子 Agent，避免 token 失控。
+> **成本说明**：启用 `director_final_review` 后，每轮"Leader 判定达成"都会调用一次 Director。典型 2-3 轮迭代的 Goal Loop 中，Director 终审调用 1-3 次（可能前几次被驳回）。每次约 4-8K tokens（x0.79 倍率），总增量约 5-15%。Director max_turns 已限制为 15，禁止使用 Agent 工具派生子 Agent，避免 token 失控。
 
 ### 差距分析与迭代规划
 

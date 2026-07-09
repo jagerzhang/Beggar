@@ -48,7 +48,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- change(model): balanced 预设 reviewer-b/tester 从 `kimi-k2.6` (x0.50) 升级到 `kimi-k2.7` (x0.65)，quality 预设 reviewer 同步升级
+- change(model): balanced 预设 reviewer-b/tester 从 `kimi-k2.6` (x0.52) 升级到 `kimi-k2.7` (x0.57)，quality 预设 reviewer 同步升级
 - change(model): agent 定义 `reviewer-b.md`/`tester.md` 模型从 K2.6 更新到 K2.7
 - change(model): MODEL_SELECTION.md / README / README_CN / SKILL.md / phases.md / beggar-leader-no-code.mdc 全部同步更新 K2.7 benchmark 数据和选型依据
 

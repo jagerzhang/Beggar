@@ -97,11 +97,11 @@ coder 完成代码后，**同时进入两个 reviewer**，形成交叉验证：
 
 | 预设 | 加权成本 | 节省率 | 说明 |
 |------|----------|--------|------|
-| `economic` | ~x0.05 | **97%** | V4-Pro 架构设计+复杂代码 + V4-Flash 常规代码 + Hy3 审查/测试 |
-| `balanced` | ~x0.29 | **91%** | GLM-5.2 架构设计 + V4 代码生成 + Kimi 辅审/测试（推荐） |
-| `quality` | ~x1.05 | **56%** | Opus 编排 + Sonnet/V4-Pro 代码 + Kimi 主审 + Flash 测试 |
+| `economic` | ~x0.06 | **94%** | V4-Pro 架构设计+复杂代码 + V4-Flash 常规代码 + Hy3 审查/测试 |
+| `balanced` | ~x0.32 | **88%** | GLM-5.2 架构设计 + V4 代码生成 + Kimi 辅审/测试（推荐） |
+| `quality` | ~x0.36 | **85%** | GLM-5.2 架构+裁决 + V4-Pro 全线代码 + Kimi 主审交叉审查 |
 
-> 节省率以全 Claude Opus (x3.33) 作为基准计算。
+> 节省率以全 Claude Opus (x3.33) 作为基准计算。公网版仅支持国产模型系列。
 
 ### 预设详细配置
 
@@ -109,46 +109,49 @@ coder 完成代码后，**同时进入两个 reviewer**，形成交叉验证：
 
 | Agent | 模型 | 倍率 | 选型理由 |
 |-------|------|------|---------|
-| Leader | kimi-k2.7 / deepseek-v4-pro | x0.65 / x0.13 | 开发者自选，V4-Pro Agent Elo 1554 更高更便宜 |
-| architect | deepseek-v4-pro | x0.13 | SWE-bench 80.6%≈Opus，方向决策者不能比 coder-senior 弱 |
-| coder-senior | deepseek-v4-pro | x0.13 | SWE-bench 80.6%≈Opus，LiveCodeBench 93.5%最高 |
-| coder-standard | deepseek-v4-flash | x0.05 | SWE-bench 79%，比V3.2跳升13点，最便宜的强模型 |
-| coder-lite | hy3 | x0.00 | SWE-bench 78%，免费模型中编码能力最强，简单复制任务绰绰有余 |
-| reviewer | hy3 | x0.00 | SWE-bench 78%+GPQA 90.4%，代码理解+推理双强，审查够用 |
-| reviewer-b | hunyuan-2.0-thinking | x0.00 | 免费+reasoning，辅审技术合理性 |
-| tester | hy3 | x0.00 | WorkBuddy任务成功率90%+ClawEval 68.5，Agent能力强 |
-| recorder | hy3 | x0.00 | SWE-bench 78%+reasoning，知识总结绰绰有余 |
-| director | claude-opus-4.6-1m | x3.33 | 经济模式用 4.6（避免 4.8 幻觉问题） |
+| Leader | deepseek-v4-pro / kimi-k2.7 | x0.16 / x0.57 | 开发者自选，V4-Pro 性价比最高 |
+| architect | deepseek-v4-pro | x0.16 | SWE-bench 80.6%，方向决策者不能比 coder-senior 弱 |
+| coder-senior | deepseek-v4-pro | x0.16 | SWE-bench 80.6%，LiveCodeBench 93.5%最高 |
+| coder-standard | deepseek-v4-flash | x0.06 | SWE-bench 79%，比V3.2跳升13点，最便宜的强模型 |
+| coder-lite | hy3 | x0.00 | SWE-bench 78%，免费模型中编码能力最强 |
+| reviewer | hy3 | x0.00 | SWE-bench 78%+GPQA 90.4%，代码理解+推理双强 |
+| reviewer-b | hy3 | x0.00 | 辅审技术合理性（免费） |
+| tester | hy3 | x0.00 | WorkBuddy任务成功率90%+ClawEval 68.5 |
+| recorder | hy3 | x0.00 | SWE-bench 78%+reasoning，知识总结 |
+| goal-evaluator | hy3 | x0.00 | 免费模型，跨厂商独立判定 |
+| director | glm-5.2 | x0.79 | 公网版最强可用推理模型 |
 
 #### Balanced — 日常推荐
 
 | Agent | 模型 | 倍率 | 选型理由 |
 |-------|------|------|---------|
-| Leader | kimi-k2.7 / deepseek-v4-pro / glm-5.2 | x0.65 / x0.13 / x1.06 | 开发者自选 |
-| architect | glm-5.2 | x1.06 | Terminal-Bench 81%>>V4-Pro 67.9%，SWE-Pro 62.1%>55.4%，架构决策者推理+理解深度影响全链路 |
-| coder-senior | deepseek-v4-pro | x0.13 | SWE-bench 80.6%, Agent Elo 1554>GLM-5.1(1535)，便宜72% |
-| coder-standard | deepseek-v4-flash | x0.05 | SWE-bench 79%，25%最高消耗角色极致性价比 |
+| Leader | deepseek-v4-pro / kimi-k2.7 / glm-5.2 | x0.16 / x0.57 / x0.79 | 开发者自选 |
+| architect | glm-5.2 | x0.79 | Terminal-Bench 81%>>V4-Pro 67.9%，SWE-Pro 62.1%>55.4%，架构决策者推理深度影响全链路 |
+| coder-senior | deepseek-v4-pro | x0.16 | SWE-bench 80.6%, Agent Elo 1554，性价比最高 |
+| coder-standard | deepseek-v4-flash | x0.06 | SWE-bench 79%，25%最高消耗角色极致性价比 |
 | coder-lite | hy3 | x0.00 | SWE-bench 78%，免费最强，简单复制+升级兜底 |
-| reviewer | deepseek-v4-pro | x0.13 | SWE-bench 80.6%，代码理解能力强 |
-| reviewer-b | kimi-k2.7 | x0.65 | 跨厂商辅审：GLM 架构 / DeepSeek 主审 / Kimi 辅审，编程专用强化，token-30% |
-| tester | kimi-k2.7 | x0.65 | 编程专用强化，Agent能力+10%，token-30%，厂商多样性 |
+| reviewer | deepseek-v4-pro | x0.16 | SWE-bench 80.6%，代码理解能力强 |
+| reviewer-b | kimi-k2.7 | x0.57 | 跨厂商辅审：GLM 架构 / DeepSeek 主审 / Kimi 辅审，编程专用强化，token-30% |
+| tester | kimi-k2.7 | x0.57 | 编程专用强化，Agent能力+10%，token-30%，厂商多样性 |
 | recorder | hy3 | x0.00 | SWE-bench 78%+reasoning，低优先级角色省到底 |
-| director | claude-opus-4.7-1m | x3.33 | 默认推荐，平衡推理与成本 |
+| goal-evaluator | hy3 | x0.00 | 免费模型，跨厂商独立判定 |
+| director | glm-5.2 | x0.79 | 公网版最强可用推理模型 |
 
 #### Quality — 关键项目
 
 | Agent | 模型 | 倍率 | 选型理由 |
 |-------|------|------|---------|
-| Leader | claude-opus-4.7-1m | x3.33 | 最强推理确保分派精准，SWE-bench 87.6% |
-| architect | claude-opus-4.7-1m | x3.33 | 方案设计是源头，质量模式必须用最强推理 |
-| coder-senior | claude-sonnet-4.6-1m | x2.00 | SWE-bench Pro 64.3%最高，最难任务仍需Claude |
-| coder-standard | deepseek-v4-pro | x0.13 | SWE-bench 80.6%>Sonnet(79.6%)，省72%质量更高 |
-| coder-lite | deepseek-v4-flash | x0.05 | SWE-bench 79%，质量模式不希望频繁升级 |
-| reviewer | kimi-k2.7 | x0.65 | 主审：跨厂商审查，Claude+DeepSeek 写代码/Kimi 第三方视角审查，编程专用强化 |
-| reviewer-b | deepseek-v4-pro | x0.13 | 辅审：SWE-bench 80.6%，补充代码深度 |
-| tester | gemini-3.5-flash | x0.99 | Terminal-Bench 76.2%全场最高，MCP Atlas 83.6%，Agent Elo 1656 |
-| recorder | claude-haiku-4.5 | x0.67 | 质量模式知识沉淀也要高质量 |
-| director | claude-opus-4.7-1m | x3.33 | 质量模式用 4.7-1M，1M 窗口应对极端场景 |
+| Leader | deepseek-v4-pro / glm-5.2 | x0.16 / x0.79 | 开发者自选，公网版最强模型 |
+| architect | glm-5.2 | x0.79 | Terminal-Bench 81%，SWE-Pro 62.1%，公网版最强推理+编码 |
+| coder-senior | deepseek-v4-pro | x0.16 | SWE-bench 80.6%，LiveCodeBench 93.5%最高 |
+| coder-standard | deepseek-v4-pro | x0.16 | SWE-bench 80.6%，质量模式用强模型 |
+| coder-lite | deepseek-v4-flash | x0.06 | SWE-bench 79%，质量模式不希望频繁升级 |
+| reviewer | kimi-k2.7 | x0.57 | 主审：跨厂商审查，DeepSeek 写代码/Kimi 第三方视角审查，编程专用强化 |
+| reviewer-b | deepseek-v4-pro | x0.16 | 辅审：SWE-bench 80.6%，补充代码深度 |
+| tester | kimi-k2.7 | x0.57 | 编程专用强化，Agent能力+10%，token-30% |
+| recorder | hy3 | x0.00 | 免费，SWE-bench 78%+reasoning |
+| goal-evaluator | hy3 | x0.00 | 免费模型，跨厂商独立判定 |
+| director | glm-5.2 | x0.79 | 公网版最强可用推理模型 |
 
 ```bash
 # 切换预设
@@ -172,86 +175,56 @@ Leader 根据任务复杂度自动分派：
 | 级别 | 模型（balanced） | 成本 | 适用场景 |
 |------|------------------|------|---------|
 | `coder-lite` | hy3 | x0.00 | 配置修改、单字段CRUD、复制已有模板 |
-| `coder-standard` | deepseek-v4-flash | x0.05 | 常规功能、bug修复、API、单元测试 |
-| `coder-senior` | deepseek-v4-pro | x0.13 | 架构变更、跨模块、安全加密、并发 |
+| `coder-standard` | deepseek-v4-flash | x0.06 | 常规功能、bug修复、API、单元测试 |
+| `coder-senior` | deepseek-v4-pro | x0.16 | 架构变更、跨模块、安全加密、并发 |
 
 审查失败 → 自动升级到下一级。最多 3 轮后激活 director 做根因分析与最终裁决。
 
 ## 可用模型全览
 
+> **⚠️ 公网版仅支持国产模型**（DeepSeek、GLM、Kimi、MiniMax、Hy3）。不支持 Claude/GPT/Gemini。Hy3 是公网版唯一免费模型。
+
 以下是所有可选模型的完整列表，供自定义配置时参考选择：
-
-### Claude 系列
-
-| 模型 | ID | 倍率 | 类型 | 平台 | 推荐角色 |
-|------|-----|------|------|------|---------|
-| Claude-Opus-4.8 | claude-opus-4.8 | x3.50 | reasoning | IDE | Leader、architect |
-| Claude-Opus-4.8-1M | claude-opus-4.8-1m | x3.50 | reasoning, long-context | IDE | Leader、architect |
-| Claude-Opus-4.7 | claude-opus-4.7 | x3.33 | reasoning | CLI+IDE | Leader、architect |
-| Claude-Opus-4.7-1M | claude-opus-4.7-1m | x3.33 | reasoning, long-context | CLI+IDE | Leader、architect、coder-senior |
-| Claude-Opus-4.6 | claude-opus-4.6 | x3.33 | reasoning | CLI+IDE | Leader、architect |
-| Claude-Opus-4.6-1M | claude-opus-4.6-1m | x3.33 | reasoning, long-context | CLI+IDE | Leader、architect |
-| Claude-Sonnet-4.6 | claude-sonnet-4.6 | x2.00 | general | CLI | coder-senior、coder-standard |
-| Claude-Sonnet-4.6-1M | claude-sonnet-4.6-1m | x2.00 | general, long-context | CLI+IDE | coder-senior、reviewer |
-| Claude-Haiku-4.5 | claude-haiku-4.5 | x0.67 | fast | CLI+IDE | coder-lite、recorder |
-
-### GPT 系列
-
-| 模型 | ID | 倍率 | 类型 | 平台 | 推荐角色 |
-|------|-----|------|------|------|---------|
-| GPT-5.5 | gpt-5.5 | x3.31 | general | CLI+IDE | Leader、architect |
-| GPT-5.4 | gpt-5.4 | x1.65 | general | CLI+IDE | coder-senior |
-| GPT-5.3-Codex | gpt-5.3-codex | x1.25 | code | CLI+IDE | coder-senior、coder-standard |
-| GPT-5.1-Codex | gpt-5.1-codex | x0.90 | code | CLI | coder-senior、coder-standard |
-| GPT-5.1-Codex-Mini | gpt-5.1-codex-mini | x0.18 | code, fast | CLI | coder-lite |
-
-### Gemini 系列
-
-| 模型 | ID | 倍率 | 类型 | 平台 | 推荐角色 |
-|------|-----|------|------|------|---------|
-| Gemini-3.5-Flash | gemini-3.5-flash | x0.99 | fast | CLI+IDE | tester |
-| Gemini-3.1-Pro | gemini-3.1-pro | x1.32 | general | CLI+IDE | architect、reviewer |
-| Gemini-2.5-Pro | gemini-2.5-pro | x0.90 | reasoning | CLI⚠+IDE | ⚠ CLI 频繁路由到不可用 region，不推荐 |
-
-### Kimi 系列
-
-| 模型 | ID | 倍率 | 类型 | 平台 | 推荐角色 |
-|------|-----|------|------|------|---------|
-| **Kimi-K2.7** 🆕 | kimi-k2.7 | x0.65 | code, agent, tool-use, long-context | CLI+IDE | Leader、reviewer、reviewer-b、tester |
-| Kimi-K2.6 | kimi-k2.6 | x0.50 | agent, tool-use, long-context | CLI | Leader（旧版，建议升级） |
 
 ### GLM 系列
 
 | 模型 | ID | 倍率 | 类型 | 平台 | 推荐角色 |
 |------|-----|------|------|------|---------|
-| GLM-5.2 | glm-5.2 | x1.06 | code, agent, reasoning, long-context | CLI+IDE | Leader、architect、coder-senior、reviewer |
-| GLM-5.1 | glm-5.1 | x0.90 | code, agent | CLI | coder-senior |
-| GLM-5v-Turbo | glm-5v-turbo | x0.81 | multimodal | CLI | （多模态场景） |
-| GLM-5.0 | glm-5.0 | x0.68 | general | CLI | coder-standard（备选） |
-| GLM-4.7 | glm-4.7 | x0.23 | general, fast | CLI | recorder（备选） |
+| **GLM-5.2** | glm-5.2 | x0.79 | code, agent, reasoning, long-context | CLI+IDE | Leader、architect、coder-senior、reviewer |
+| GLM-5.1 | glm-5.1 | x0.79 | code, agent | CLI+IDE | （旧版，与5.2同价） |
+| GLM-5v-Turbo | glm-5v-turbo | x0.95 | multimodal, code | CLI+IDE | UI/前端（多模态场景） |
+| GLM-5.0-Turbo | glm-5.0-turbo | x0.95 | general, fast | CLI+IDE | （通用任务） |
+| GLM-5.0 | glm-5.0 | x0.80 | general | CLI+IDE | （通用任务） |
+| GLM-4.7 | glm-4.7 | x0.23 | general, fast | CLI+IDE | （经济通用） |
 
-### MiniMax 系列
+### Kimi 系列
 
 | 模型 | ID | 倍率 | 类型 | 平台 | 推荐角色 |
 |------|-----|------|------|------|---------|
-| MiniMax-M2.7 | minimax-m2.7 | x0.19 | general, fast | CLI | recorder（备选） |
-| MiniMax-M2.5 | minimax-m2.5 | x0.13 | general, fast | CLI | （仅最简场景） |
+| **Kimi-K2.7** | kimi-k2.7 | x0.57 | code, agent, tool-use, long-context | CLI+IDE | Leader、reviewer、reviewer-b、tester |
+| Kimi-K2.6 | kimi-k2.6 | x0.52 | agent, tool-use, long-context | CLI+IDE | （旧版，建议升级） |
+| Kimi-K2.5 | kimi-k2.5 | x0.45 | general, agent | CLI+IDE | （付费，不再免费） |
 
 ### DeepSeek 系列
 
 | 模型 | ID | 倍率 | 类型 | 平台 | 推荐角色 |
 |------|-----|------|------|------|---------|
-| DeepSeek-V4-Pro | deepseek-v4-pro | x0.13 | code, agent, reasoning, long-context | CLI | coder-senior、coder-standard、reviewer、Leader |
-| DeepSeek-V4-Flash | deepseek-v4-flash | x0.05 | code, fast, long-context | CLI | coder-standard、coder-lite |
-| DeepSeek-V3.2 | deepseek-v3-2-volc | x0.15 | general | CLI | （旧版，建议升级到 V4） |
+| **DeepSeek-V4-Pro** | deepseek-v4-pro | x0.16 | code, agent, reasoning, long-context | CLI+IDE | coder-senior、coder-standard、reviewer、Leader |
+| **DeepSeek-V4-Flash** | deepseek-v4-flash | x0.06 | code, fast, long-context | CLI+IDE | coder-standard、coder-lite |
+| DeepSeek-V3.2 | deepseek-v3-2-volc | x0.29 | general | CLI+IDE | （旧版，建议升级到 V4） |
+
+### MiniMax 系列
+
+| 模型 | ID | 倍率 | 类型 | 平台 | 推荐角色 |
+|------|-----|------|------|------|---------|
+| MiniMax-M3 | minimax-m3 | x0.25 | general, fast | CLI+IDE | （经济通用） |
+| MiniMax-M2.7 | minimax-m2.7 | x0.19 | general, fast | CLI+IDE | （经济通用） |
 
 ### 免费模型
 
 | 模型 | ID | 倍率 | 类型 | 平台 | 推荐角色 |
 |------|-----|------|------|------|---------|
-| Hy3 | hy3 | x0.00 | general, agent, reasoning | CLI | coder-lite、reviewer、tester、recorder |
-| Kimi-K2.5 | kimi-k2.5 | x0.00 | general, agent | CLI | tester（备选） |
-| Hunyuan-2.0-Thinking | hunyuan-2.0-thinking | x0.00 | reasoning | CLI | architect（备选） |
+| Hy3 | hy3 | x0.00 | general, agent, reasoning | CLI+IDE | coder-lite、reviewer、tester、recorder、goal-evaluator |
 
 ### 模型选择指南
 
@@ -267,8 +240,9 @@ Leader 根据任务复杂度自动分派：
 
 ## CLI 模型说明
 
-- 所有模型使用 kebab-case ID（如 `claude-sonnet-4.6-1m`）
-- 免费层模型（hy3, kimi-k2.5, hunyuan-2.0-thinking）可显著节省成本
+- 所有模型使用 kebab-case ID（如 `deepseek-v4-pro`）
+- Hy3 是公网版唯一免费模型（x0.00）
+- Kimi-K2.5 在公网版已不再免费（x0.45）
 - `setup.sh` 接受标准 ID 和简写别名
 
 ## 令牌优化

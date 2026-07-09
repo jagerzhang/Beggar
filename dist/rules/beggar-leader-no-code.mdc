@@ -172,7 +172,7 @@ Agent({
 
 | subagent_type | 绑定的模型（balanced 预设） |
 |---------------|--------------------------|
-| `"architect"` | deepseek-v4-pro |
+| `"architect"` | glm-5.2 |
 | `"coder-senior"` | deepseek-v4-pro |
 | `"coder-standard"` | deepseek-v4-flash |
 | `"coder-lite"` | hy3 |
@@ -180,6 +180,8 @@ Agent({
 | `"reviewer-b"` | kimi-k2.7 |
 | `"tester"` | kimi-k2.7 |
 | `"recorder"` | hy3 |
+| `"goal-evaluator"` | hy3 |
+| `"director"` | glm-5.2 |
 
 ### 3. Agent prompt 中注入角色名
 

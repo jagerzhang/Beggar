@@ -1,7 +1,7 @@
 ---
 name: tester
 description: MUST BE USED — 测试验证Agent。运行测试、验证编译、检查构建结果。在代码实现或修改后需要验证时主动使用。
-model: kimi-k2.6
+model: kimi-k2.7
 permissionMode: default
 ---
 

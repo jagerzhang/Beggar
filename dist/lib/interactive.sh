@@ -55,7 +55,7 @@ Shell 别名配置（cbc CLI 快速启动）：
 
 
 模型别名（IDE/CLI 兼容）：
-  支持标准 ID:    deepseek-v4-pro, kimi-k2.6, glm-5.1
+支持标准 ID:    deepseek-v4-pro, kimi-k2.7, glm-5.2
   支持简写:       deepseek, kimi, glm, hy3, minimax
   支持 IDE 显示名: "deepseek v4 pro", "kimi k2.6", "glm 5.1"
 

@@ -97,7 +97,7 @@ After a coder agent completes its work, code enters **both reviewers simultaneou
 
 | Preset | Weighted Cost | Savings | Description |
 |--------|---------------|---------|-------------|
-| `economic` | ~x0.05 | **97%** | V4-Pro architecture + V4-Flash code + Hy3 review/testing |
+| `economic` | ~x0.06 | **94%** | V4-Pro architecture + V4-Flash code + Hy3 review/testing |
 | `balanced` | ~x0.29 | **91%** | GLM-5.2 architecture + V4 code + Kimi testing/review (recommended) |
 | `quality` | ~x1.05 | **56%** | Opus orchestration + Sonnet/V4-Pro code + Kimi review + Flash testing |
 
@@ -109,46 +109,49 @@ After a coder agent completes its work, code enters **both reviewers simultaneou
 
 | Agent | Model | Cost | Rationale |
 |-------|-------|------|-----------|
-| Leader | kimi-k2.7 / deepseek-v4-pro | x0.65 / x0.13 | Developer's choice, V4-Pro Agent Elo 1554 higher & cheaper |
-| architect | deepseek-v4-pro | x0.13 | SWE-bench 80.6%≈Opus, direction-setter can't be weaker than coder-senior |
-| coder-senior | deepseek-v4-pro | x0.13 | SWE-bench 80.6%≈Opus, LiveCodeBench 93.5% highest |
-| coder-standard | deepseek-v4-flash | x0.05 | SWE-bench 79%, 13-point jump over V3.2 |
+| Leader | deepseek-v4-pro / kimi-k2.7 | x0.16 / x0.57 | Developer's choice, V4-Pro best value |
+| architect | deepseek-v4-pro | x0.16 | SWE-bench 80.6%, direction-setter can't be weaker than coder-senior |
+| coder-senior | deepseek-v4-pro | x0.16 | SWE-bench 80.6%, LiveCodeBench 93.5% highest |
+| coder-standard | deepseek-v4-flash | x0.06 | SWE-bench 79%, 13-point jump over V3.2 |
 | coder-lite | hy3 | x0.00 | SWE-bench 78%, strongest free model for pattern copying |
 | reviewer | hy3 | x0.00 | SWE-bench 78%+GPQA 90.4%, code comprehension+reasoning |
-| reviewer-b | hunyuan-2.0-thinking | x0.00 | Free+reasoning, secondary technical soundness review |
+| reviewer-b | hy3 | x0.00 | Secondary technical soundness review (free) |
 | tester | hy3 | x0.00 | WorkBuddy 90% success+ClawEval 68.5, strong agent capability |
 | recorder | hy3 | x0.00 | SWE-bench 78%+reasoning, knowledge distillation |
-| director | claude-opus-4.6-1m | x3.33 | Economy mode uses 4.6 (avoid 4.8 hallucinations) |
+| goal-evaluator | hy3 | x0.00 | Free model, cross-vendor independent judgment |
+| director | glm-5.2 | x0.79 | Public version's strongest reasoning model |
 
 #### Balanced — Recommended for Daily Use
 
 | Agent | Model | Cost | Rationale |
 |-------|-------|------|-----------|
-| Leader | kimi-k2.7 / deepseek-v4-pro / glm-5.2 | x0.65 / x0.13 / x1.06 | Developer's choice |
-| architect | glm-5.2 | x1.06 | Terminal-Bench 81%>>V4-Pro 67.9%, SWE-Pro 62.1%>55.4%, reasoning depth impacts entire chain |
-| coder-senior | deepseek-v4-pro | x0.13 | SWE-bench 80.6%, Agent Elo 1554>GLM-5.1(1535), 72% cheaper |
-| coder-standard | deepseek-v4-flash | x0.05 | SWE-bench 79%, highest token share needs extreme value |
+| Leader | deepseek-v4-pro / kimi-k2.7 / glm-5.2 | x0.16 / x0.57 / x0.79 | Developer's choice |
+| architect | glm-5.2 | x0.79 | Terminal-Bench 81%>>V4-Pro 67.9%, SWE-Pro 62.1%>55.4%, reasoning depth impacts entire chain |
+| coder-senior | deepseek-v4-pro | x0.16 | SWE-bench 80.6%, Agent Elo 1554, best value |
+| coder-standard | deepseek-v4-flash | x0.06 | SWE-bench 79%, highest token share needs extreme value |
 | coder-lite | hy3 | x0.00 | SWE-bench 78%, strongest free, escalation fallback |
-| reviewer | deepseek-v4-pro | x0.13 | SWE-bench 80.6% code comprehension, GPQA 90.1% |
-| reviewer-b | kimi-k2.7 | x0.65 | Cross-vendor: GLM architect / DeepSeek primary / Kimi secondary, code-optimized, token-30% |
-| tester | kimi-k2.7 | x0.65 | Code-optimized, Agent +10%, token-30%, vendor diversity |
+| reviewer | deepseek-v4-pro | x0.16 | SWE-bench 80.6% code comprehension, GPQA 90.1% |
+| reviewer-b | kimi-k2.7 | x0.57 | Cross-vendor: GLM architect / DeepSeek primary / Kimi secondary, code-optimized, token-30% |
+| tester | kimi-k2.7 | x0.57 | Code-optimized, Agent +10%, token-30%, vendor diversity |
 | recorder | hy3 | x0.00 | SWE-bench 78%+reasoning, low-priority stays free |
-| director | claude-opus-4.7-1m | x3.33 | Default recommendation, balanced reasoning vs cost |
+| goal-evaluator | hy3 | x0.00 | Free model, cross-vendor independent judgment |
+| director | glm-5.2 | x0.79 | Public version's strongest reasoning model |
 
 #### Quality — Critical Projects
 
 | Agent | Model | Cost | Rationale |
 |-------|-------|------|-----------|
-| Leader | claude-opus-4.7-1m | x3.33 | Strongest reasoning, SWE-bench 87.6% for precise routing |
-| architect | claude-opus-4.7-1m | x3.33 | Design is the source of truth, needs best reasoning |
-| coder-senior | claude-sonnet-4.6-1m | x2.00 | SWE-bench Pro 64.3% highest, hardest tasks need Claude |
-| coder-standard | deepseek-v4-pro | x0.13 | SWE-bench 80.6%>Sonnet(79.6%), 72% cheaper & stronger |
-| coder-lite | deepseek-v4-flash | x0.05 | SWE-bench 79%, quality mode avoids frequent escalation |
-| reviewer | kimi-k2.7 | x0.65 | Primary: cross-vendor review, Claude+DeepSeek code / Kimi third-party perspective, code-optimized |
-| reviewer-b | deepseek-v4-pro | x0.13 | Secondary: SWE-bench 80.6%, supplements code depth |
-| tester | gemini-3.5-flash | x0.99 | Terminal-Bench 76.2% highest, MCP Atlas 83.6%, Agent Elo 1656 |
-| recorder | claude-haiku-4.5 | x0.67 | Quality mode demands high-quality knowledge capture |
-| director | claude-opus-4.7-1m | x3.33 | Quality mode uses 4.7-1M, 1M window for extreme cases |
+| Leader | deepseek-v4-pro / glm-5.2 | x0.16 / x0.79 | Developer's choice, public version strongest models |
+| architect | glm-5.2 | x0.79 | Terminal-Bench 81%, SWE-Pro 62.1%, strongest public reasoning+code |
+| coder-senior | deepseek-v4-pro | x0.16 | SWE-bench 80.6%, LiveCodeBench 93.5% highest |
+| coder-standard | deepseek-v4-pro | x0.16 | SWE-bench 80.6%, quality mode uses strong model |
+| coder-lite | deepseek-v4-flash | x0.06 | SWE-bench 79%, quality mode avoids frequent escalation |
+| reviewer | kimi-k2.7 | x0.57 | Primary: cross-vendor review, DeepSeek code / Kimi third-party perspective, code-optimized |
+| reviewer-b | deepseek-v4-pro | x0.16 | Secondary: SWE-bench 80.6%, supplements code depth |
+| tester | kimi-k2.7 | x0.57 | Code-optimized, Agent +10%, token-30% |
+| recorder | hy3 | x0.00 | Free, SWE-bench 78%+reasoning for knowledge capture |
+| goal-evaluator | hy3 | x0.00 | Free model, cross-vendor independent judgment |
+| director | glm-5.2 | x0.79 | Public version's strongest reasoning model |
 
 ```bash
 # Switch preset
@@ -172,86 +175,54 @@ Leader automatically dispatches tasks based on complexity:
 | Tier | Model (balanced) | Cost | Use For |
 |------|------------------|------|---------|
 | `coder-lite` | hy3 | x0.00 | Config changes, single-field CRUD, copy-paste patterns |
-| `coder-standard` | deepseek-v4-flash | x0.05 | Regular features, bug fixes, API endpoints, tests |
-| `coder-senior` | deepseek-v4-pro | x0.13 | Architecture changes, cross-module, security, concurrency |
+| `coder-standard` | deepseek-v4-flash | x0.06 | Regular features, bug fixes, API endpoints, tests |
+| `coder-senior` | deepseek-v4-pro | x0.16 | Architecture changes, cross-module, security, concurrency |
 
 Review fails → auto-upgrade to next tier. Max 3 rounds before director activates for root-cause analysis & final arbitration.
 
 ## Available Models
 
-Complete model catalog for custom configuration:
-
-### Claude Series
-
-| Model | ID | Cost | Type | Platform | Recommended For |
-|-------|----|------|------|----------|----------------|
-| Claude-Opus-4.8 | claude-opus-4.8 | x3.50 | reasoning | IDE | Leader, architect |
-| Claude-Opus-4.8-1M | claude-opus-4.8-1m | x3.50 | reasoning, long-context | IDE | Leader, architect |
-| Claude-Opus-4.7 | claude-opus-4.7 | x3.33 | reasoning | CLI+IDE | Leader, architect |
-| Claude-Opus-4.7-1M | claude-opus-4.7-1m | x3.33 | reasoning, long-context | CLI+IDE | Leader, architect, coder-senior |
-| Claude-Opus-4.6 | claude-opus-4.6 | x3.33 | reasoning | CLI+IDE | Leader, architect |
-| Claude-Opus-4.6-1M | claude-opus-4.6-1m | x3.33 | reasoning, long-context | CLI+IDE | Leader, architect |
-| Claude-Sonnet-4.6 | claude-sonnet-4.6 | x2.00 | general | CLI | coder-senior, coder-standard |
-| Claude-Sonnet-4.6-1M | claude-sonnet-4.6-1m | x2.00 | general, long-context | CLI+IDE | coder-senior, reviewer |
-| Claude-Haiku-4.5 | claude-haiku-4.5 | x0.67 | fast | CLI+IDE | coder-lite, recorder |
-
-### GPT Series
-
-| Model | ID | Cost | Type | Platform | Recommended For |
-|-------|----|------|------|----------|----------------|
-| GPT-5.5 | gpt-5.5 | x3.31 | general | CLI+IDE | Leader, architect |
-| GPT-5.4 | gpt-5.4 | x1.65 | general | CLI+IDE | coder-senior |
-| GPT-5.3-Codex | gpt-5.3-codex | x1.25 | code | CLI+IDE | coder-senior, coder-standard |
-| GPT-5.1-Codex | gpt-5.1-codex | x0.90 | code | CLI | coder-senior, coder-standard |
-| GPT-5.1-Codex-Mini | gpt-5.1-codex-mini | x0.18 | code, fast | CLI | coder-lite |
-
-### Gemini Series
-
-| Model | ID | Cost | Type | Platform | Recommended For |
-|-------|----|------|------|----------|----------------|
-| Gemini-3.5-Flash | gemini-3.5-flash | x0.99 | fast | CLI+IDE | tester |
-| Gemini-3.1-Pro | gemini-3.1-pro | x1.32 | general | CLI+IDE | architect, reviewer |
-| Gemini-2.5-Pro | gemini-2.5-pro | x0.90 | reasoning | CLI+IDE | ⚠ CLI frequently routes to unavailable region, not recommended |
-
-### Kimi Series
-
-| Model | ID | Cost | Type | Platform | Recommended For |
-|-------|----|------|------|----------|----------------|
-| **Kimi-K2.7** 🆕 | kimi-k2.7 | x0.65 | code, agent, tool-use, long-context | CLI+IDE | Leader, reviewer, reviewer-b, tester |
-| Kimi-K2.6 | kimi-k2.6 | x0.50 | agent, tool-use, long-context | CLI | Leader (legacy, upgrade recommended) |
+> **⚠️ Public version only supports domestic models** (DeepSeek, GLM, Kimi, MiniMax, Hy3). Claude/GPT/Gemini are NOT available. Hy3 is the only free model.
 
 ### GLM Series
 
 | Model | ID | Cost | Type | Platform | Recommended For |
 |-------|----|------|------|----------|----------------|
-| GLM-5.2 | glm-5.2 | x1.06 | code, agent, reasoning, long-context | CLI+IDE | Leader, architect, coder-senior, reviewer |
-| GLM-5.1 | glm-5.1 | x0.90 | code, agent | CLI | coder-senior |
-| GLM-5v-Turbo | glm-5v-turbo | x0.81 | multimodal | CLI | (multimodal scenarios) |
-| GLM-5.0 | glm-5.0 | x0.68 | general | CLI | coder-standard (fallback) |
-| GLM-4.7 | glm-4.7 | x0.23 | general, fast | CLI | recorder (fallback) |
+| **GLM-5.2** | glm-5.2 | x0.79 | code, agent, reasoning, long-context | CLI+IDE | Leader, architect, coder-senior, reviewer |
+| GLM-5.1 | glm-5.1 | x0.79 | code, agent | CLI+IDE | (legacy, same price as 5.2) |
+| GLM-5v-Turbo | glm-5v-turbo | x0.95 | multimodal, code | CLI+IDE | UI/frontend (multimodal scenarios) |
+| GLM-5.0-Turbo | glm-5.0-turbo | x0.95 | general, fast | CLI+IDE | (general tasks) |
+| GLM-5.0 | glm-5.0 | x0.80 | general | CLI+IDE | (general tasks) |
+| GLM-4.7 | glm-4.7 | x0.23 | general, fast | CLI+IDE | (budget general) |
 
-### MiniMax Series
+### Kimi Series
 
 | Model | ID | Cost | Type | Platform | Recommended For |
 |-------|----|------|------|----------|----------------|
-| MiniMax-M2.7 | minimax-m2.7 | x0.19 | general, fast | CLI | recorder (fallback) |
-| MiniMax-M2.5 | minimax-m2.5 | x0.13 | general, fast | CLI | (simplest tasks only) |
+| **Kimi-K2.7** | kimi-k2.7 | x0.57 | code, agent, tool-use, long-context | CLI+IDE | Leader, reviewer, reviewer-b, tester |
+| Kimi-K2.6 | kimi-k2.6 | x0.52 | agent, tool-use, long-context | CLI+IDE | (legacy, upgrade recommended) |
+| Kimi-K2.5 | kimi-k2.5 | x0.45 | general, agent | CLI+IDE | (paid, not free) |
 
 ### DeepSeek Series
 
 | Model | ID | Cost | Type | Platform | Recommended For |
 |-------|----|------|------|----------|----------------|
-| DeepSeek-V4-Pro | deepseek-v4-pro | x0.13 | code, agent, reasoning, long-context | CLI | coder-senior, coder-standard, reviewer, Leader |
-| DeepSeek-V4-Flash | deepseek-v4-flash | x0.05 | code, fast, long-context | CLI | coder-standard, coder-lite |
-| DeepSeek-V3.2 | deepseek-v3-2-volc | x0.15 | general | CLI | (legacy, upgrade to V4) |
+| **DeepSeek-V4-Pro** | deepseek-v4-pro | x0.16 | code, agent, reasoning, long-context | CLI+IDE | coder-senior, coder-standard, reviewer, Leader |
+| **DeepSeek-V4-Flash** | deepseek-v4-flash | x0.06 | code, fast, long-context | CLI+IDE | coder-standard, coder-lite |
+| DeepSeek-V3.2 | deepseek-v3-2-volc | x0.29 | general | CLI+IDE | (legacy, upgrade to V4) |
+
+### MiniMax Series
+
+| Model | ID | Cost | Type | Platform | Recommended For |
+|-------|----|------|------|----------|----------------|
+| MiniMax-M3 | minimax-m3 | x0.25 | general, fast | CLI+IDE | (budget general) |
+| MiniMax-M2.7 | minimax-m2.7 | x0.19 | general, fast | CLI+IDE | (budget general) |
 
 ### Free Models
 
 | Model | ID | Cost | Type | Platform | Recommended For |
 |-------|----|------|------|----------|----------------|
-| Hy3 | hy3 | x0.00 | general, agent, reasoning | CLI | coder-lite, reviewer, tester, recorder |
-| Kimi-K2.5 | kimi-k2.5 | x0.00 | general, agent | CLI | tester (fallback) |
-| Hunyuan-2.0-Thinking | hunyuan-2.0-thinking | x0.00 | reasoning | CLI | architect (fallback) |
+| Hy3 | hy3 | x0.00 | general, agent, reasoning | CLI+IDE | coder-lite, reviewer, tester, recorder, goal-evaluator |
 
 ### Model Selection Guide
 
@@ -267,8 +238,9 @@ Match models to agent roles based on core capability requirements:
 
 ## CLI Model Notes
 
-- All models use kebab-case IDs (e.g., `claude-sonnet-4.6-1m`)
-- Free tier models (hy3, kimi-k2.5, hunyuan-2.0-thinking) provide significant cost savings
+- All models use kebab-case IDs (e.g., `deepseek-v4-pro`)
+- Hy3 is the only free model in the public version (x0.00)
+- Kimi-K2.5 is no longer free in the public version (x0.45)
 - `setup.sh` accepts standard IDs and shorthand aliases
 
 ## Token Optimization

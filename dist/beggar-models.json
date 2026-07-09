@@ -8,129 +8,156 @@
     },
     "updated_at": "2026-07-09",
     "update_command": ".codebuddy/setup.sh models",
-    "leader_note": "主会话（Leader）模型由开发者通过 /model 命令自行选择。推荐：deepseek-v4-pro (x0.13, SWE-bench 80.6%) 或 kimi-k2.6 (x0.50, Agent 能力强) 或 glm-5.1 (x0.90, 编码/推理兼顾)。",
-    "platform_note": "公网版仅支持国产模型系列（DeepSeek/GLM/Kimi/MiniMax/Hy3）。不支持 Claude/GPT/Gemini/Hunyuan。模型可用性参考 CodeBuddy 国内个人体验版支持情况。"
+    "leader_note": "主会话（Leader）模型由开发者通过 /model 命令自行选择。推荐：deepseek-v4-pro (x0.16, SWE-bench 80.6%) 或 kimi-k2.7 (x0.57, 编程专用强化, Agent+10%, token-30%) 或 glm-5.2 (x0.79, Terminal-Bench 81%, 开源最强)。",
+    "platform_note": "公网版仅支持国产模型系列（DeepSeek/GLM/Kimi/MiniMax/Hy3）。不支持 Claude/GPT/Gemini。模型可用性与定价参考 CodeBuddy 国内个人体验版。Hy3 是唯一免费模型。"
   },
   "aliases": {
     "_note": "IDE 显示名 / 简写 → 标准 model id。setup.sh agent custom <alias> 会自动解析。",
-    "deepseek": "deepseek-v3-2-volc",
-    "kimi": "kimi-k2.6",
-    "kimi-code": "kimi-k2.6",
-    "glm": "glm-5.1",
+    "deepseek": "deepseek-v4-pro",
+    "kimi": "kimi-k2.7",
+    "kimi-code": "kimi-k2.7",
+    "glm": "glm-5.2",
     "hy3": "hy3",
-    "minimax": "minimax-m2.7",
+    "minimax": "minimax-m3",
     "deepseek v3.2": "deepseek-v3-2-volc",
     "deepseek v4 pro": "deepseek-v4-pro",
     "deepseek v4 flash": "deepseek-v4-flash",
+    "kimi k2.7": "kimi-k2.7",
+    "kimi k2.7 code": "kimi-k2.7",
     "kimi k2.6": "kimi-k2.6",
     "kimi k2.5": "kimi-k2.5",
+    "glm 5.2": "glm-5.2",
     "glm 5.1": "glm-5.1",
     "glm 5.0 turbo": "glm-5.0-turbo",
     "glm 5v turbo": "glm-5v-turbo",
     "glm 5.0": "glm-5.0",
     "glm 4.7": "glm-4.7",
-    "minimax m2.7": "minimax-m2.7",
-    "minimax m2.5": "minimax-m2.5"
+    "minimax m3": "minimax-m3",
+    "minimax m2.7": "minimax-m2.7"
   },
   "models": {
     "paid": {
-      "deepseek": [
+      "glm": [
         {
-          "id": "deepseek-v4-pro",
-          "tier": "mid",
-          "cost": "x0.13",
+          "id": "glm-5.2",
+          "tier": "top",
+          "cost": "x0.79",
           "tags": ["code", "agent", "reasoning", "long-context"],
           "platform": ["cli", "ide"],
-          "recommended_for": ["coder-senior", "coder-standard", "leader", "architect", "reviewer"],
-          "note": "SWE-bench 80.6%, LiveCodeBench 93.5%, 1M context, 48%降价后性价比极高"
+          "recommended_for": ["leader", "architect", "coder-senior", "reviewer"],
+          "note": "开源最强文本模型。Terminal-Bench 81%, SWE-bench Pro 62.1%, FrontierSWE 74.4%(接近Opus), Intelligence Index 51(开源最高), 1M context。比GLM-5.1质变级提升(Terminal +26pp)"
         },
-        {
-          "id": "deepseek-v4-flash",
-          "tier": "budget",
-          "cost": "x0.05",
-          "tags": ["code", "fast", "long-context"],
-          "platform": ["cli", "ide"],
-          "recommended_for": ["coder-standard", "coder-lite"],
-          "note": "SWE-bench 79.0%, 1M context, 62%降价后x0.05极低价格"
-        },
-        {
-          "id": "deepseek-v3-2-volc",
-          "tier": "budget",
-          "cost": "x0.15",
-          "tags": ["general"],
-          "platform": ["cli", "ide"],
-          "note": "旧版，建议升级到 V4"
-        }
-      ],
-      "glm": [
         {
           "id": "glm-5.1",
           "tier": "mid",
-          "cost": "x0.90",
+          "cost": "x0.79",
           "tags": ["code", "agent"],
           "platform": ["cli", "ide"],
-          "recommended_for": ["leader", "architect", "coder-senior", "reviewer"],
-          "note": "编码/推理/Agent 能力均衡。公网版 GLM 系列最强可用模型"
+          "note": "已被GLM-5.2超越，同价格但GLM-5.2能力更强，建议升级"
         },
         {
           "id": "glm-5v-turbo",
           "tier": "light",
-          "cost": "x0.81",
+          "cost": "x0.95",
           "tags": ["multimodal", "code", "tool-use"],
           "platform": ["cli", "ide"],
           "recommended_for": ["ui-coder", "frontend"],
-          "note": "多模态视觉编程基座。适合设计稿→代码、UI截图分析、前端开发场景"
+          "note": "多模态视觉编程基座。Design2Code 94.8%(全场最高), BrowseComp-VL 51.9%。适合设计稿→代码、UI截图分析、前端开发场景"
         },
         {
           "id": "glm-5.0-turbo",
           "tier": "light",
-          "cost": "x0.45",
+          "cost": "x0.95",
           "tags": ["general", "fast"],
           "platform": ["cli", "ide"]
         },
         {
           "id": "glm-5.0",
           "tier": "light",
-          "cost": "x0.68",
+          "cost": "x0.80",
           "tags": ["general"],
-          "platform": ["cli"],
-          "note": "仅 CLI 可用"
+          "platform": ["cli", "ide"]
         },
         {
           "id": "glm-4.7",
           "tier": "budget",
           "cost": "x0.23",
           "tags": ["general", "fast"],
-          "platform": ["cli"],
-          "note": "仅 CLI 可用"
+          "platform": ["cli", "ide"]
+        }
+      ],
+      "deepseek": [
+        {
+          "id": "deepseek-v4-pro",
+          "tier": "mid",
+          "cost": "x0.16",
+          "tags": ["code", "agent", "reasoning", "long-context"],
+          "platform": ["cli", "ide"],
+          "recommended_for": ["coder-senior", "coder-standard", "leader", "architect", "reviewer"],
+          "note": "SWE-bench 80.6%, LiveCodeBench 93.5%, 1M context, 性价比极高"
+        },
+        {
+          "id": "deepseek-v4-flash",
+          "tier": "budget",
+          "cost": "x0.06",
+          "tags": ["code", "fast", "long-context"],
+          "platform": ["cli", "ide"],
+          "recommended_for": ["coder-standard", "coder-lite"],
+          "note": "SWE-bench 79.0%, 1M context, 极低价格强模型"
+        },
+        {
+          "id": "deepseek-v3-2-volc",
+          "tier": "light",
+          "cost": "x0.29",
+          "tags": ["general"],
+          "platform": ["cli", "ide"],
+          "note": "旧版，建议升级到 V4"
         }
       ],
       "kimi": [
         {
+          "id": "kimi-k2.7",
+          "tier": "mid",
+          "cost": "x0.57",
+          "tags": ["code", "agent", "tool-use", "long-context"],
+          "platform": ["cli", "ide"],
+          "recommended_for": ["leader", "reviewer", "reviewer-b", "tester"],
+          "note": "K2.6的编程专用强化版。Code Bench v2 +21.8%、Agent能力+10%、长程任务token消耗-30%（有效成本x0.399低于K2.6的x0.52）。SWE-bench Pro 58.6%基线+编码全面提升"
+        },
+        {
           "id": "kimi-k2.6",
           "tier": "mid",
-          "cost": "x0.50",
+          "cost": "x0.52",
           "tags": ["agent", "tool-use", "long-context"],
           "platform": ["cli", "ide"],
           "recommended_for": ["leader", "architect", "reviewer", "tester"],
-          "note": "Agent 能力强，长上下文支持好"
+          "note": "已被K2.7超越，建议升级到kimi-k2.7"
+        },
+        {
+          "id": "kimi-k2.5",
+          "tier": "light",
+          "cost": "x0.45",
+          "tags": ["general", "agent"],
+          "platform": ["cli", "ide"],
+          "recommended_for": ["goal-evaluator"],
+          "note": "公网版已不再免费(x0.45)。可作为goal-evaluator的付费跨厂商选项"
         }
       ],
       "minimax": [
+        {
+          "id": "minimax-m3",
+          "tier": "budget",
+          "cost": "x0.25",
+          "tags": ["general", "fast"],
+          "platform": ["cli", "ide"],
+          "note": "MiniMax 新版模型"
+        },
         {
           "id": "minimax-m2.7",
           "tier": "budget",
           "cost": "x0.19",
           "tags": ["general", "fast"],
           "platform": ["cli", "ide"]
-        },
-        {
-          "id": "minimax-m2.5",
-          "tier": "budget",
-          "cost": "x0.13",
-          "tags": ["general", "fast"],
-          "platform": ["cli"],
-          "note": "仅 CLI 可用"
         }
       ]
     },
@@ -141,75 +168,67 @@
         "cost": "x0.00",
         "tags": ["general", "agent", "reasoning"],
         "platform": ["cli", "ide"],
-        "recommended_for": ["coder-lite", "tester", "recorder"],
-        "note": "SWE-bench Verified 78.0%、GPQA 90.4%，编码/推理/Agent能力比肩2-5倍参数旗舰；适合审查/测试/归档"
-      },
-      {
-        "id": "kimi-k2.5",
-        "tier": "free",
-        "cost": "x0.00",
-        "tags": ["general", "agent"],
-        "platform": ["cli", "ide"],
-        "recommended_for": ["tester", "goal-evaluator"]
+        "recommended_for": ["coder-lite", "tester", "recorder", "goal-evaluator"],
+        "note": "SWE-bench Verified 78.0%、GPQA 90.4%、ClawEval 68.5，编码/推理/Agent能力比肩2-5倍参数旗舰；公网版唯一免费模型，适合审查/测试/归档/目标验证"
       }
     ]
   },
   "presets": {
     "economic": {
-      "description": "经济模式：V4-Pro 架构设计+复杂代码(x0.13) + V4-Flash 常规代码(x0.05) + 双免费 reviewer + Hy3 测试（节省 >96%）",
-      "estimated_avg_cost": "x0.05",
+      "description": "经济模式：V4-Pro 架构设计+复杂代码(x0.16) + V4-Flash 常规代码(x0.06) + Hy3 审查/测试/归档(x0.00) + GLM-5.2 应急裁决（节省 >94%）",
+      "estimated_avg_cost": "x0.06",
       "platform": "both",
-      "leader_model": "kimi-k2.6",
-      "leader_note": "Leader 推荐：deepseek-v4-pro (x0.13) 或 kimi-k2.6 (x0.50)。",
+      "leader_model": "deepseek-v4-pro",
+      "leader_note": "Leader 推荐：deepseek-v4-pro (x0.16) 或 kimi-k2.7 (x0.57)。",
       "config": {
         "architect": "deepseek-v4-pro",
         "coder-senior": "deepseek-v4-pro",
         "coder-standard": "deepseek-v4-flash",
         "coder-lite": "hy3",
         "reviewer": "hy3",
-        "reviewer-b-model": "kimi-k2.5",
+        "reviewer-b-model": "hy3",
         "tester": "hy3",
         "recorder": "hy3",
-        "goal-evaluator": "kimi-k2.5",
-        "director": "glm-5.1"
+        "goal-evaluator": "hy3",
+        "director": "glm-5.2"
       }
     },
     "balanced": {
-      "description": "平衡模式（推荐）：GLM-5.1 架构设计 + V4 代码生成(x0.05~0.13) + K2.6 测试/辅审 + 三厂商覆盖（节省 >90%）",
-      "estimated_avg_cost": "x0.29",
+      "description": "平衡模式（推荐）：GLM-5.2 架构设计(x0.79) + V4 代码生成(x0.06~0.16) + K2.7 测试/辅审(x0.57) + 四厂商覆盖（节省 >88%）",
+      "estimated_avg_cost": "x0.32",
       "platform": "both",
       "leader_model": "deepseek-v4-pro",
-      "leader_note": "Leader 推荐：deepseek-v4-pro (x0.13) 或 kimi-k2.6 (x0.50) 或 glm-5.1 (x0.90)。",
+      "leader_note": "Leader 推荐：deepseek-v4-pro (x0.16) 或 kimi-k2.7 (x0.57, 编程专用强化) 或 glm-5.2 (x0.79, Terminal-Bench 81%)。",
       "config": {
-        "architect": "glm-5.1",
+        "architect": "glm-5.2",
         "coder-senior": "deepseek-v4-pro",
         "coder-standard": "deepseek-v4-flash",
         "coder-lite": "hy3",
         "reviewer": "deepseek-v4-pro",
-        "reviewer-b-model": "kimi-k2.6",
-        "tester": "kimi-k2.6",
+        "reviewer-b-model": "kimi-k2.7",
+        "tester": "kimi-k2.7",
         "recorder": "hy3",
-        "goal-evaluator": "kimi-k2.5",
-        "director": "glm-5.1"
+        "goal-evaluator": "hy3",
+        "director": "glm-5.2"
       }
     },
     "quality": {
-      "description": "质量优先：GLM-5.1 架构+裁决 + V4-Pro 全线代码 + K2.6 双 reviewer 交叉审查（节省 >70%）",
-      "estimated_avg_cost": "x0.50",
+      "description": "质量优先：GLM-5.2 架构+裁决(x0.79) + V4-Pro 全线代码(x0.16) + K2.7 双 reviewer 交叉审查(x0.57)（节省 >70%）",
+      "estimated_avg_cost": "x0.36",
       "platform": "both",
-      "platform_note": "主会话用 deepseek-v4-pro 或 glm-5.1。双 reviewer 跨厂商审查（Kimi + DeepSeek）。公网版无 Claude/GPT/Gemini，质量模式通过多厂商组合最大化质量。",
+      "platform_note": "主会话用 deepseek-v4-pro 或 glm-5.2。双 reviewer 跨厂商审查（Kimi + DeepSeek）。公网版无 Claude/GPT/Gemini，质量模式通过多厂商组合最大化质量。",
       "leader_model": "deepseek-v4-pro",
       "config": {
-        "architect": "glm-5.1",
+        "architect": "glm-5.2",
         "coder-senior": "deepseek-v4-pro",
         "coder-standard": "deepseek-v4-pro",
         "coder-lite": "deepseek-v4-flash",
-        "reviewer": "kimi-k2.6",
+        "reviewer": "kimi-k2.7",
         "reviewer-b-model": "deepseek-v4-pro",
-        "tester": "kimi-k2.6",
+        "tester": "kimi-k2.7",
         "recorder": "hy3",
-        "goal-evaluator": "kimi-k2.5",
-        "director": "glm-5.1"
+        "goal-evaluator": "hy3",
+        "director": "glm-5.2"
       }
     }
   },
@@ -255,11 +274,11 @@
       "description": "独立目标验证评估者，读取验证报告做 yes/no 判定",
       "priority": "medium",
       "token_share": "2%",
-      "note": "用轻量模型（kimi-k2.5/hy3）做独立判定，避免 Leader 自判偏差。每轮迭代仅调用 1 次"
+      "note": "用免费模型（hy3）做独立判定，避免 Leader 自判偏差。每轮迭代仅调用 1 次"
     },
     "director": {
       "description": "隐藏升级裁决 Agent，仅在 3 轮审查全败时激活",
-      "model_note": "统一使用 GLM-5.1（公网版最强可用推理模型），做根因分析和最终裁决",
+      "model_note": "统一使用 GLM-5.2（公网版最强可用推理模型），做根因分析和最终裁决",
       "trigger": "3 轮 coder 全败 + Leader 根因分析后仍无法自行解决时激活一次"
     }
   },

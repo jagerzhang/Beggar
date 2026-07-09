@@ -1,7 +1,7 @@
 ---
 name: goal-evaluator
 description: MUST BE USED — 独立目标验证评估者。读取 tester 和 reviewer 的验证报告，做独立的 yes/no 判定。不执行任何代码、不调用任何工具，仅基于报告内容判定。
-model: kimi-k2.5
+model: hy3
 permissionMode: default
 max_turns: 8
 ---

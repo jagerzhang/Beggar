@@ -82,7 +82,7 @@ def tmp_models_file():
                     {
                         "id": "test-model-1",
                         "tier": "mid",
-                        "cost": "x0.50",
+                        "cost": "x0.16",
                         "tags": ["general"],
                         "platform": ["cli", "ide"]
                     },
