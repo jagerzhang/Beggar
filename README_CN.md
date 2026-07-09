@@ -63,7 +63,7 @@ curl -fsSL https://github.com/jagerzhang/beggar/raw/main/install.sh | bash
 
 ## Agent 架构
 
-![Beggar 多 Agent 架构（balanced 预设）](dist/docs/architecture-balanced.svg)
+![Beggar 多 Agent 架构（balanced 预设）](dist/docs/architecture-balanced.png)
 
 > 图示为默认 **balanced** 预设的模型配置。`economic` / `quality` 预设的模型映射见下方「模型预设」章节。
 

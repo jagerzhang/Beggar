@@ -63,7 +63,7 @@ curl -fsSL https://github.com/jagerzhang/beggar/raw/main/install.sh | bash
 
 ## Agent Architecture
 
-![Beggar Multi-Agent Architecture (balanced preset)](dist/docs/architecture-balanced.svg)
+![Beggar Multi-Agent Architecture (balanced preset)](dist/docs/architecture-balanced.png)
 
 > The diagram shows the default **balanced** preset model configuration. For `economic` / `quality` preset mappings, see the "Model Presets" section below.
 
