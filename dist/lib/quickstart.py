@@ -607,7 +607,7 @@ def step7_summary_and_execute(preset, notify_webhook, notify_channel, persona, a
 
     if preset == 'extreme':
         print(f'  {YELLOW}[!] 说明{NC}: extreme 模式使用 economic 预设 + 免费 Leader 模型。')
-print(f'  请手动将主面板模型切换为免费模型（如 hy3）。')
+        print(f'  请手动将主面板模型切换为免费模型（如 hy3）。')
 
     if not _run_setup_command(['preset', actual_preset]):
         print(f'{CRIMSON}[✗] 预设应用失败{NC}')
