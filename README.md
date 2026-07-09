@@ -1,6 +1,6 @@
 # Beggar — CodeBuddy Multi-Agent Model Differentiation & Cost-Saving Kit
 
-**English** | [中文](README_CN.md) | [Model Selection Rationale](MODEL_SELECTION.md) | [Personas](PERSONAS.md) | [Changelog](../CHANGELOG.md)
+**English** | [中文](README_CN.md) | [Model Selection Rationale](dist/MODEL_SELECTION.md) | [Personas](dist/PERSONAS.md) | [Changelog](CHANGELOG.md)
 
 Reusable multi-agent development configuration for [CodeBuddy Code](https://cnb.cool/codebuddy/codebuddy-code) (CLI & IDE).
 
@@ -61,7 +61,7 @@ curl -fsSL https://github.com/jagerzhang/beggar/raw/main/install.sh | bash
 
 ## Agent Architecture
 
-![Beggar Multi-Agent Architecture (balanced preset)](docs/architecture-balanced.svg)
+![Beggar Multi-Agent Architecture (balanced preset)](dist/docs/architecture-balanced.svg)
 
 > The diagram shows the default **balanced** preset model configuration. For `economic` / `quality` preset mappings, see the "Model Presets" section below.
 
