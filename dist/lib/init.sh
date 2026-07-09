@@ -434,7 +434,7 @@ except Exception as e:
         fi
     fi
 
-    # Step 4: 检测并自动安装 OpenSpec CLI
+    # Step 4: 检测 OpenSpec CLI（可选，beggar 已内置 openspec-* skill）
     echo ""
     print_info "Step 4/7: 检测 OpenSpec CLI"
     if command -v openspec &>/dev/null; then
@@ -442,15 +442,8 @@ except Exception as e:
         opspec_version=$(openspec --version 2>/dev/null | head -1 || echo "unknown")
         print_info "OpenSpec CLI: $opspec_version"
     else
-        print_warning "OpenSpec CLI 未安装（beggar-workflow 全流程依赖此工具）"
-        print_info "正在自动安装..."
-        if npm install -g @fission-ai/openspec &>/dev/null; then
-            opspec_version=$(openspec --version 2>/dev/null | head -1 || echo "unknown")
-            print_success "OpenSpec CLI 安装成功: $opspec_version"
-        else
-            print_warning "自动安装失败，请手动安装：${YELLOW}npm install -g @fission-ai/openspec${NC}"
-            print_info "        或：${YELLOW}npx @fission-ai/openspec --help${NC}（按需调用）"
-        fi
+        print_info "OpenSpec CLI 未安装（可选，beggar 已内置 openspec-* skill）"
+        print_info "如需安装：${YELLOW}npm install -g @fission-ai/openspec${NC}"
     fi
 
     # Step 5: 注入 Beggar hooks（含 RTK hook）

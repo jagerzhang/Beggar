@@ -16,12 +16,11 @@
 |------|---------|-----------|------|
 | [CodeBuddy Code](https://cnb.cool/codebuddy/codebuddy-code)（CLI 或 IDE） | ✅ 必需 | — | 宿主平台，建议 v2.90+ |
 | Python 3 | ✅ 必需 | — | 用于 QuickStart 向导、Hook 和状态管理。需在 PATH 中可用（`python` 或 `python3`） |
-| Node.js / npm | ✅ 必需 | — | 用于安装 OpenSpec CLI。建议 npm 8+ |
 | curl + tar | ✅ 必需 | — | 安装时下载和解压使用。大多数系统已预装 |
-| [OpenSpec CLI](https://www.npmjs.com/package/@fission-ai/openspec) | ✅ 必需 | ✅ `init` 时自动 | beggar-workflow 的变更管理工具。通过 `npm install -g @fission-ai/openspec` 自动安装 |
 | [Superpowers](https://github.com/anthropics/superpowers) 插件 | ⭐ 推荐 | ✅ `init` 时自动 | 质量实践（TDD、系统化调试）。在 `settings.json` 中自动配置。未安装时工作流仍可运行 |
+| [OpenSpec CLI](https://www.npmjs.com/package/@fission-ai/openspec) | 🔧 可选 | — | beggar 已内置 `openspec-*` skill，CLI 仅提供 `openspec list/archive` 等便利命令。如需安装：`npm install -g @fission-ai/openspec` |
 
-> 💡 **提示**：安装后运行 `.codebuddy/setup.sh init`，会自动安装 OpenSpec CLI 并配置 Superpowers 插件。
+> 💡 **提示**：安装后运行 `.codebuddy/setup.sh init`，会自动配置 Superpowers 插件。
 
 ## 快速开始
 

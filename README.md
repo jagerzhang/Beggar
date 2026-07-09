@@ -16,12 +16,11 @@ Reusable multi-agent development configuration for [CodeBuddy Code](https://cnb.
 |-----------|-----------|---------------|-------------|
 | [CodeBuddy Code](https://cnb.cool/codebuddy/codebuddy-code) (CLI or IDE) | ✅ Required | — | The host platform. v2.90+ recommended. |
 | Python 3 | ✅ Required | — | For QuickStart wizard, hooks, and state management. Must be in PATH (`python` or `python3`). |
-| Node.js / npm | ✅ Required | — | For OpenSpec CLI installation. npm 8+ recommended. |
 | curl + tar | ✅ Required | — | For download & extract during installation. Pre-installed on most systems. |
-| [OpenSpec CLI](https://www.npmjs.com/package/@fission-ai/openspec) | ✅ Required | ✅ Auto during `init` | Change management for beggar-workflow. Auto-installed via `npm install -g @fission-ai/openspec`. |
 | [Superpowers](https://github.com/anthropics/superpowers) plugin | ⭐ Recommended | ✅ Auto during `init` | Quality practices (TDD, systematic debugging). Auto-configured in `settings.json`. Workflow functions without it. |
+| [OpenSpec CLI](https://www.npmjs.com/package/@fission-ai/openspec) | 🔧 Optional | — | beggar already includes built-in `openspec-*` skills. CLI provides `openspec list/archive` convenience commands. Install via `npm install -g @fission-ai/openspec` if desired. |
 
-> 💡 **Tip**: Run `.codebuddy/setup.sh init` after installation — it auto-installs OpenSpec CLI and auto-configures the Superpowers plugin.
+> 💡 **Tip**: Run `.codebuddy/setup.sh init` after installation — it auto-configures the Superpowers plugin in `settings.json`.
 
 ## Quick Start
 
