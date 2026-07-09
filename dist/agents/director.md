@@ -1,7 +1,7 @@
 ---
 name: director
 description: 隐藏升级 Agent，仅在所有 coder 3 轮审查全败时被 Leader 召唤，做最终裁决
-model: claude-opus-4.7-1m
+model: glm-5.1
 tools: Read, Glob, Grep, Bash
 ---
 

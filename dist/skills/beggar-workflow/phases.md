@@ -263,9 +263,9 @@ Agent({
 
 | 预设 | reviewer-A（实现视角） | reviewer-B（技术视角） |
 |------|----------------------|---------------------|
-| economic | hy3 (x0.00) | hunyuan-2.0-thinking (x0.00) |
-| balanced | deepseek-v4-pro (x0.13) | kimi-k2.7 (x0.65) |
-| quality | kimi-k2.7 (x0.65) | deepseek-v4-pro (x0.13) |
+| economic | hy3 (x0.00) | kimi-k2.5 (x0.00) |
+| balanced | deepseek-v4-pro (x0.13) | kimi-k2.6 (x0.50) |
+| quality | kimi-k2.6 (x0.50) | deepseek-v4-pro (x0.13) |
 ```
 
 **双 reviewer 通过规则：**

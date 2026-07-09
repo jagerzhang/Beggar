@@ -55,9 +55,9 @@ Shell 别名配置（cbc CLI 快速启动）：
 
 
 模型别名（IDE/CLI 兼容）：
-  支持标准 ID:    claude-sonnet-4.6-1m, gemini-2.5-pro
-  支持简写:       opus, sonnet, haiku, gemini-pro, deepseek
-  支持 IDE 显示名: "claude sonnet 4.6 1m", "gemini 2.5 pro"
+  支持标准 ID:    deepseek-v4-pro, kimi-k2.6, glm-5.1
+  支持简写:       deepseek, kimi, glm, hy3, minimax
+  支持 IDE 显示名: "deepseek v4 pro", "kimi k2.6", "glm 5.1"
 
 示例：
   beggar init
@@ -102,7 +102,7 @@ interactive_setup() {
         3) setup_inherit ;;
         4)
             echo ""
-            echo -e "支持: 标准 ID (${YELLOW}claude-sonnet-4.6-1m${NC}), 简写 (${YELLOW}sonnet${NC}), IDE 显示名 (${YELLOW}claude sonnet 4.6 1m${NC})"
+            echo -e "支持: 标准 ID (${YELLOW}deepseek-v4-pro${NC}), 简写 (${YELLOW}deepseek${NC}), IDE 显示名 (${YELLOW}deepseek v4 pro${NC})"
             echo -n "模型名称: "
             read -r model
             setup_custom "$model"

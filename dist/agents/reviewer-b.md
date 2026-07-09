@@ -1,7 +1,7 @@
 ---
 name: reviewer-b
 description: MUST BE USED — 辅审代码审查Agent。从与主审不同的视角审查代码，重点关注技术合理性和需求完整性。与主审 reviewer 并行使用，提供跨厂商交叉验证。
-model: kimi-k2.7
+model: kimi-k2.6
 permissionMode: default
 ---
 

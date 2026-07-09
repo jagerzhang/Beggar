@@ -83,16 +83,16 @@ Agent({
 
 | subagent_type | 绑定的模型（balanced 预设） | 适用场景 |
 |---------------|--------------------------|---------|
-| `"architect"` | glm-5.2 | 方案设计、闸门评审（开源最强） |
+| `"architect"` | glm-5.1 | 方案设计、闸门评审 |
 | `"coder-senior"` | deepseek-v4-pro | 复杂代码（架构/安全/并发） |
 | `"coder-standard"` | deepseek-v4-flash | 常规功能、API、bug 修复 |
 | `"coder-lite"` | hy3 | 简单 CRUD、配置、模板复制 |
 | `"reviewer"` | deepseek-v4-pro | 代码审查、规格合规（主审） |
-| `"reviewer-b"` | kimi-k2.7 | 技术合理性审查（辅审，跨厂商交叉验证） |
-| `"tester"` | kimi-k2.7 | 编译验证、测试运行 |
+| `"reviewer-b"` | kimi-k2.6 | 技术合理性审查（辅审，跨厂商交叉验证） |
+| `"tester"` | kimi-k2.6 | 编译验证、测试运行 |
 | `"recorder"` | hy3 | 知识沉淀、归档记录 |
-| `"goal-evaluator"` | claude-haiku-4.5 | 独立目标验证判定（Goal Loop Phase 6 专用） |
-| `"director"` | claude-opus-4.7-1m | 隐藏升级裁决（3 轮全败时激活）、Goal Loop 目标审定与验证终审 |
+| `"goal-evaluator"` | kimi-k2.5 | 独立目标验证判定（Goal Loop Phase 6 专用） |
+| `"director"` | glm-5.1 | 隐藏升级裁决（3 轮全败时激活）、Goal Loop 目标审定与验证终审 |
 
 ⚠️ **不指定 subagent_type 会导致子 agent 使用 Leader 自己的模型运行，这正是差异化模型失效的根因。**
 

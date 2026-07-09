@@ -22,7 +22,7 @@ setup_custom() {
     local input="$1"
     if [[ -z "$input" ]]; then
         print_error "请指定模型名称: .codebuddy/setup.sh agent custom <model>"
-        print_info "支持标准 ID (claude-sonnet-4.6-1m)、简写 (sonnet) 或 IDE 显示名 (claude sonnet 4.6 1m)"
+        print_info "支持标准 ID (deepseek-v4-pro)、简写 (deepseek) 或 IDE 显示名 (deepseek v4 pro)"
         exit 1
     fi
     local model

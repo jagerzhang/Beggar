@@ -325,25 +325,38 @@ EOF
         rm -f "$CODEBUDDY_DIR/user-models.json.bak" 2>/dev/null
     fi
 
-    # 迁移 kimi-k2.6 → kimi-k2.7（v2.8.5 编程专用强化版）
-    if [[ -f "$CODEBUDDY_DIR/beggar-models.json" ]]; then
-        sed -i.bak 's/kimi-k2.6/kimi-k2.7/g' "$CODEBUDDY_DIR/beggar-models.json" 2>/dev/null
-        rm -f "$CODEBUDDY_DIR/beggar-models.json.bak" 2>/dev/null
-    fi
+    # 公网版模型迁移：移除内网版专有模型 ID
+    _migrate_public_models() {
+        local target="$1"
+        [[ -f "$target" ]] || return 0
+        sed -i.bak \
+            -e 's/kimi-k2\.7/kimi-k2.6/g' \
+            -e 's/glm-5\.2/glm-5.1/g' \
+            -e 's/claude-haiku-4\.5/kimi-k2.5/g' \
+            -e 's/claude-opus-4\.7-1m/glm-5.1/g' \
+            -e 's/claude-opus-4\.6-1m/glm-5.1/g' \
+            -e 's/claude-opus-4\.7/glm-5.1/g' \
+            -e 's/claude-opus-4\.6/glm-5.1/g' \
+            -e 's/claude-sonnet-4\.6-1m/deepseek-v4-pro/g' \
+            -e 's/claude-sonnet-4\.6/deepseek-v4-pro/g' \
+            -e 's/gemini-3\.5-flash/kimi-k2.6/g' \
+            -e 's/gemini-3\.1-pro/kimi-k2.6/g' \
+            -e 's/gemini-2\.5-pro/kimi-k2.6/g' \
+            -e 's/gpt-5\.5/deepseek-v4-pro/g' \
+            -e 's/gpt-5\.4/deepseek-v4-pro/g' \
+            -e 's/gpt-5\.3-codex/deepseek-v4-pro/g' \
+            -e 's/gpt-5\.1-codex-mini/deepseek-v4-flash/g' \
+            -e 's/hunyuan-2\.0-thinking/kimi-k2.5/g' \
+            "$target" 2>/dev/null
+        rm -f "${target}.bak" 2>/dev/null
+    }
+    _migrate_public_models "$CODEBUDDY_DIR/beggar-models.json"
     if [[ -d "$CODEBUDDY_DIR/agents" ]]; then
         for md_file in "$CODEBUDDY_DIR/agents"/*.md; do
-            [[ -e "$md_file" ]] || continue
-            sed -i.bak 's/kimi-k2.6/kimi-k2.7/g' "$md_file" 2>/dev/null
-            rm -f "${md_file}.bak" 2>/dev/null
+            _migrate_public_models "$md_file"
         done
     fi
-    if [[ -f "$CODEBUDDY_DIR/user-models.json" ]]; then
-        sed -i.bak 's/kimi-k2.6/kimi-k2.7/g' "$CODEBUDDY_DIR/user-models.json" 2>/dev/null
-        rm -f "$CODEBUDDY_DIR/user-models.json.bak" 2>/dev/null
-    fi
-
-    # 设置执行权限
-    chmod +x "$CODEBUDDY_DIR/setup.sh" 2>/dev/null || true
+    _migrate_public_models "$CODEBUDDY_DIR/user-models.json"
 
     # 运行初始化
     print_info "运行初始化脚本..."
@@ -611,22 +624,38 @@ EOF
         rm -f "$CODEBUDDY_DIR/user-models.json.bak" 2>/dev/null
     fi
 
-    # 迁移 kimi-k2.6 → kimi-k2.7（v2.8.5 编程专用强化版）
-    if [[ -f "$CODEBUDDY_DIR/beggar-models.json" ]]; then
-        sed -i.bak 's/kimi-k2.6/kimi-k2.7/g' "$CODEBUDDY_DIR/beggar-models.json" 2>/dev/null
-        rm -f "$CODEBUDDY_DIR/beggar-models.json.bak" 2>/dev/null
-    fi
+    # 公网版模型迁移：移除内网版专有模型 ID
+    _migrate_public_models() {
+        local target="$1"
+        [[ -f "$target" ]] || return 0
+        sed -i.bak \
+            -e 's/kimi-k2\.7/kimi-k2.6/g' \
+            -e 's/glm-5\.2/glm-5.1/g' \
+            -e 's/claude-haiku-4\.5/kimi-k2.5/g' \
+            -e 's/claude-opus-4\.7-1m/glm-5.1/g' \
+            -e 's/claude-opus-4\.6-1m/glm-5.1/g' \
+            -e 's/claude-opus-4\.7/glm-5.1/g' \
+            -e 's/claude-opus-4\.6/glm-5.1/g' \
+            -e 's/claude-sonnet-4\.6-1m/deepseek-v4-pro/g' \
+            -e 's/claude-sonnet-4\.6/deepseek-v4-pro/g' \
+            -e 's/gemini-3\.5-flash/kimi-k2.6/g' \
+            -e 's/gemini-3\.1-pro/kimi-k2.6/g' \
+            -e 's/gemini-2\.5-pro/kimi-k2.6/g' \
+            -e 's/gpt-5\.5/deepseek-v4-pro/g' \
+            -e 's/gpt-5\.4/deepseek-v4-pro/g' \
+            -e 's/gpt-5\.3-codex/deepseek-v4-pro/g' \
+            -e 's/gpt-5\.1-codex-mini/deepseek-v4-flash/g' \
+            -e 's/hunyuan-2\.0-thinking/kimi-k2.5/g' \
+            "$target" 2>/dev/null
+        rm -f "${target}.bak" 2>/dev/null
+    }
+    _migrate_public_models "$CODEBUDDY_DIR/beggar-models.json"
     if [[ -d "$CODEBUDDY_DIR/agents" ]]; then
         for md_file in "$CODEBUDDY_DIR/agents"/*.md; do
-            [[ -e "$md_file" ]] || continue
-            sed -i.bak 's/kimi-k2.6/kimi-k2.7/g' "$md_file" 2>/dev/null
-            rm -f "${md_file}.bak" 2>/dev/null
+            _migrate_public_models "$md_file"
         done
     fi
-    if [[ -f "$CODEBUDDY_DIR/user-models.json" ]]; then
-        sed -i.bak 's/kimi-k2.6/kimi-k2.7/g' "$CODEBUDDY_DIR/user-models.json" 2>/dev/null
-        rm -f "$CODEBUDDY_DIR/user-models.json.bak" 2>/dev/null
-    fi
+    _migrate_public_models "$CODEBUDDY_DIR/user-models.json"
 
     rm -rf "$tmp_dir"
 

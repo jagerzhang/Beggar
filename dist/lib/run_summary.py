@@ -19,7 +19,7 @@ Usage:
         --phase-archive 30 \
         --review-gate-triggers 1 \
         --coder-guard-escalations 0 \
-        --models "architect=glm-5.2,coder-senior=deepseek-v4-pro"
+        --models "architect=glm-5.1,coder-senior=deepseek-v4-pro"
 
     # Or read from a JSON file:
     python3 run_summary.py --memory-dir /path/to/memory --input /path/to/metrics.json

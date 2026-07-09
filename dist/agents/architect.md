@@ -1,7 +1,7 @@
 ---
 name: architect
 description: MUST BE USED — 核心架构设计与质量管控Agent。负责方案设计、闸门评审、架构决策。在需要深度推理、系统设计、方案评审时主动使用。
-model: glm-5.2
+model: glm-5.1
 permissionMode: plan
 ---
 
