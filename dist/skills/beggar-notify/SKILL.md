@@ -1,18 +1,18 @@
 ---
 name: beggar-notify
-description: 飞鸽传书通知调度。Leader 在关键节点通过 `beggar notify` 发送客服号-markdown 通知。
+description: 群机器人通知调度。Leader 在关键节点通过 `beggar notify` 发送企业微信/飞书群消息。
 ---
 
-# 飞鸽传书通知调度
+# 群机器人通知调度
 
 ## 概述
 
-此 Skill 为 beggar-workflow 提供客服号-markdown 渠道通知。
-通过 curl 直调飞鸽传书 HTTP endpoint，不依赖 CodeBuddy MCP 集成。
+此 Skill 为 beggar-workflow 提供群机器人 webhook 渠道通知。
+支持企业微信群机器人和飞书群机器人两种渠道，通过 notify.py 直接调用 webhook API。
 
 ## 调用方式
 
-Leader 通过 `beggar notify` 命令发送通知（自动处理全局/项目令牌读取）：
+Leader 通过 `beggar notify` 命令发送通知（自动处理全局/项目配置读取）：
 
 ```bash
 beggar notify "<message>"
@@ -20,7 +20,10 @@ beggar notify "<message>"
 
 ## 渠道
 
-统一使用客服号-markdown 渠道（`send_wecom_cs_markdown`），不再支持语音和邮件渠道。
+支持两种通知渠道，在 notify.json 中配置：
+
+- **wecom** — 企业微信群机器人 webhook（发送 markdown 消息）
+- **feishu** — 飞书群机器人 webhook（发送 text 消息）
 
 ## 通知调度规则
 
@@ -30,21 +33,22 @@ beggar notify "<message>"
 
 ## 超时
 
-notify.py 内设 `urllib.request` 5 秒超时，防止 hang 住主流程。
+默认 5 秒超时，超时后静默失败（不阻塞主流程）。
 
 ## 配置
 
-通知令牌存储在 `notify.json` 中，**读取优先级**：
+通知配置存储在 `.codebuddy/notify.json`（项目级）或 `~/.codebuddy/notify.json`（全局级）：
 
-1. `.codebuddy/notify.json` — 项目级（覆盖全局）
-2. `~/.codebuddy/notify.json` — 全局（所有项目共享）
-3. 两者都不存在 → 跳过通知
+```json
+{
+  "enabled": true,
+  "channel": "wecom",
+  "webhook_url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx",
+  "events": {
+    "N1": {"enabled": true},
+    "N2": {"enabled": true}
+  }
+}
+```
 
-Leader 读取时按此顺序查找，找到第一个 `enabled: true` 的配置即停止。
-
-## 安全
-
-- Token 通过环境变量 `BEGGAR_NOTIFY_TOKEN` 传入，不会在 `ps` 中泄露
-- notify.json 存储令牌，已加入 `.gitignore`
-- `.codebuddy/notify.json` 和 `~/.codebuddy/notify.json` 权限 `chmod 600`，仅 owner 可读
-- 消息内容由 Leader 预构造固定模板，不含用户输入
+通过 `beggar quickstart` 或 `beggar setup notify` 交互式配置。
