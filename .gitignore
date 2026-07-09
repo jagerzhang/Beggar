@@ -23,3 +23,4 @@ Thumbs.db
 .idea/
 dist/README.md
 dist/README_CN.md
+dist/docs/architecture-balanced.svg

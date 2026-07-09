@@ -123,6 +123,11 @@ print_info "计算 SHA256..."
 SHA256=$(sha256_cmd "$TAR_FILE" | cut -d' ' -f1)
 echo "$SHA256  beggar-v${VERSION}.tar.gz" > "$SHA256_FILE"
 print_success "tar.gz SHA256: $SHA256"
+
+# 生成 latest-version.txt（供 install.sh 静态重定向获取版本，不依赖 GitHub API）
+VERSION_INFO_FILE="$PROJECT_DIR/releases/latest-version.txt"
+echo "$VERSION" > "$VERSION_INFO_FILE"
+print_success "latest-version.txt 已生成: v${VERSION}"
 fi
 
 # ============================================================
@@ -241,14 +246,14 @@ if gh release create "v${VERSION}" \
     --repo "$GITHUB_REPO" \
     --title "Beggar v${VERSION}" \
     --notes-file "$RN_FILE" \
-    "$TAR_FILE" "$SHA256_FILE" "$SKILL_ZIP" \
+    "$TAR_FILE" "$SHA256_FILE" "$SKILL_ZIP" "$VERSION_INFO_FILE" \
     2>/dev/null; then
     print_success "GitHub Release 创建成功"
 else
     print_warning "GitHub Release 创建失败（可能已存在），尝试更新 assets..."
     gh release upload "v${VERSION}" \
         --repo "$GITHUB_REPO" \
-        "$TAR_FILE" "$SHA256_FILE" "$SKILL_ZIP" \
+        "$TAR_FILE" "$SHA256_FILE" "$SKILL_ZIP" "$VERSION_INFO_FILE" \
         --clobber 2>/dev/null || print_warning "assets 上传失败"
 fi
 rm -f "$RN_FILE"

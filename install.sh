@@ -38,7 +38,7 @@ EOF
 }
 
 show_version() {
-    echo "beggar install script v2.0.0"
+    echo "beggar install script v1.0.0"
 }
 
 # 解析参数
@@ -131,29 +131,28 @@ main_install() {
 
     check_dependencies
 
-    # 下载最新版本信息
+    # 获取最新版本信息（使用 GitHub 静态重定向，不依赖 API，避免 403 速率限制）
     print_info "获取最新版本信息..."
-    local latest_json
-    latest_json=$(curl -fsSL "https://api.github.com/repos/jagerzhang/beggar/releases/latest") || \
-        print_error "无法获取远程版本信息，请检查网络连接"
-
     local version
     local download_url
     local expected_sha256
-    # GitHub API 返回 tag_name (如 v2.8.6) 和 assets 数组
-    version=$(echo "$latest_json" | grep -o '"tag_name"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"v\([^"]*\)"/\1/')
-    # 从 assets 中查找 tar.gz 下载地址
-    download_url=$(echo "$latest_json" | grep -o '"browser_download_url"[[:space:]]*:[[:space:]]*"[^"]*beggar-v[^"]*\.tar\.gz"' | head -1 | cut -d'"' -f4)
-    # SHA256 从 assets 中查找对应的 .sha256 文件
-    expected_sha256=$(echo "$latest_json" | grep -o '"browser_download_url"[[:space:]]*:[[:space:]]*"[^"]*\.sha256"' | head -1 | cut -d'"' -f4)
-    # 如果有 sha256 文件 URL，下载其内容
-    if [[ -n "$expected_sha256" ]]; then
-        expected_sha256=$(curl -fsSL "$expected_sha256" | cut -d' ' -f1)
+
+    version=$(curl -fsSL "https://github.com/jagerzhang/beggar/releases/latest/download/latest-version.txt" 2>/dev/null) || \
+        print_error "无法获取远程版本信息，请检查网络连接"
+
+    # 去除可能的空白字符
+    version=$(echo "$version" | tr -d '[:space:]')
+
+    if [[ -z "$version" ]]; then
+        print_error "远程版本信息为空，请稍后重试"
     fi
 
-    if [[ -z "$version" || -z "$download_url" ]]; then
-        print_error "远程版本信息格式错误，请稍后重试"
-    fi
+    # 直接使用 releases/download 静态 URL（不经过 API）
+    download_url="https://github.com/jagerzhang/beggar/releases/download/v${version}/beggar-v${version}.tar.gz"
+    local sha256_url="https://github.com/jagerzhang/beggar/releases/download/v${version}/beggar-v${version}.tar.gz.sha256"
+
+    # 尝试获取 SHA256（可选，失败不阻塞）
+    expected_sha256=$(curl -fsSL "$sha256_url" 2>/dev/null | cut -d' ' -f1 || true)
 
     print_success "最新版本: v${version}"
 
