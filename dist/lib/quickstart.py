@@ -111,7 +111,7 @@ if not _SETUP_SCRIPT:
 # If still not found, try project-level fallback
 if not _SETUP_SCRIPT:
     for candidate in [
-        '/data/workspace/agenthub-portal/beggar/dist/setup.sh',
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'setup.sh'),
         os.path.expanduser('~/.codebuddy/setup.sh'),
     ]:
         if os.path.isfile(candidate):

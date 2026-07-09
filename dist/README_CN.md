@@ -441,4 +441,4 @@ curl -fsSL <install-url> | bash       # 拉取上游更新（增量同步）
 
 ## 许可
 
-内部使用。由 AgentHub 团队维护。
+MIT 开源协议 — 详见 [LICENSE](LICENSE)。

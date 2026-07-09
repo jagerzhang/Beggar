@@ -75,7 +75,7 @@ ls $HOME/.codebuddy/plugins/marketplaces/codebuddy-plugins-official/external_plu
 #  在 CodeBuddy Code 中执行 /plugin superpowers"
 ```
 
-## 通知调度（可选，基于飞鸽传书）
+## 通知调度（可选，基于群机器人 webhook）
 
 如果 notify.json 存在且 `enabled: true`，Leader 在关键节点发送通知。
 

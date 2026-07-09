@@ -63,7 +63,7 @@ The script downloads the latest release from the configured mirror and extracts 
 
 - Add a `.codebuddy/.beggar-platform` marker file containing the detected platform (`cli` or `ide`)
 
-> **Note**: As of v2.8.4, the hy3 model ID (`hy3-ioa`) is unified across CLI and IDE. No platform-specific model ID replacement is needed.
+> **Note**: As of v2.8.4, the hy3 model ID is unified across CLI and IDE. No platform-specific model ID replacement is needed.
 
 ### Step 6: Run Setup (Interactive via Conversation)
 

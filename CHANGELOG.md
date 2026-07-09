@@ -43,12 +43,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
-- feat(model): 新增 `kimi-k2.7-ioa` 模型 — K2.6 编程专用强化版（Code Bench v2 +21.8%、Program-Bench +11%、MLS Bench Lite +31.5%、Agent能力+10%、长程任务token-30%），x0.65 倍率，有效成本 x0.455 低于 K2.6 的 x0.50
+- feat(model): 新增 `kimi-k2.7` 模型 — K2.6 编程专用强化版（Code Bench v2 +21.8%、Program-Bench +11%、MLS Bench Lite +31.5%、Agent能力+10%、长程任务token-30%），x0.65 倍率，有效成本 x0.455 低于 K2.6 的 x0.50
 - feat(model): `beggar-models.json` 新增 K2.7 模型定义、aliases 映射，balanced/quality 预设 reviewer-b/tester/reviewer 角色升级到 K2.7
 
 ### Changed
 
-- change(model): balanced 预设 reviewer-b/tester 从 `kimi-k2.6-ioa` (x0.50) 升级到 `kimi-k2.7-ioa` (x0.65)，quality 预设 reviewer 同步升级
+- change(model): balanced 预设 reviewer-b/tester 从 `kimi-k2.6` (x0.50) 升级到 `kimi-k2.7` (x0.65)，quality 预设 reviewer 同步升级
 - change(model): agent 定义 `reviewer-b.md`/`tester.md` 模型从 K2.6 更新到 K2.7
 - change(model): MODEL_SELECTION.md / README / README_CN / SKILL.md / phases.md / beggar-leader-no-code.mdc 全部同步更新 K2.7 benchmark 数据和选型依据
 
@@ -66,11 +66,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- change(model): hy3 模型 ID 统一为 `hy3-ioa`，CLI 和 IDE 统一，旧 ID 自动迁移
+- change(model): hy3 模型 ID 统一为 `hy3`，CLI 和 IDE 统一，旧 ID 自动迁移
 
 ### Fixed
 
-- fix(model): hy3-preview-agent-ioa → hy3-ioa 正式版更新 — 同步模型 ID、benchmark 数据（SWE-bench 78%、GPQA 90.4%、ClawEval 68.5）、文档描述和显示名
+- fix(model): hy3 → hy3 正式版更新 — 同步模型 ID、benchmark 数据（SWE-bench 78%、GPQA 90.4%、ClawEval 68.5）、文档描述和显示名
 - fix(goal): Director 重复调用 + token 失控 — 移除 Agent 工具权限，max_turns 统一为 10，强化状态锁检查
 - fix(goal): Director 模型漂移 — 移除调用时硬编码的 model 参数，改由 frontmatter 决定
 - fix(goal): 全 Agent 防重复调用（completed_steps）— 所有 Agent 调用前检查步骤标识，避免 context 稀释后重复 spawn
@@ -290,7 +290,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
-- feat: 统一 CLI/IDE hy3 模型 ID 为 `hy3-preview-agent-ioa`
+- feat: 统一 CLI/IDE hy3 模型 ID 为 `hy3`
 
 ---
 
@@ -373,7 +373,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - feat(release): skill.zip 打包与上传
 - feat(skill): Skill 安装方式，支持 IDE 自动适配
 - feat(agents): coder-senior 增加 WebFetch/WebSearch 权限
-- feat: 太湖令牌重复安装自动检测复用
+- feat: 通知配置重复安装自动检测复用
 - feat: 强制子 Agent 使用指定模型 — 所有调用必须指定 subagent_type
 
 ### Fixed

@@ -18,7 +18,7 @@ def temp_project(tmp_path):
     changes_dir.mkdir(parents=True)
     os.chdir(tmp_path)
     yield tmp_path
-    os.chdir("/Users/jager/With/beggar")
+    os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 
 
 def run_state_cmd(*args, cwd=None):
@@ -306,7 +306,7 @@ class TestFind:
         assert result.returncode == 0
         data = json.loads(result.stdout)
         assert data["found"] is False
-        os.chdir("/Users/jager/With/beggar")
+        os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 
 
 class TestDispatch:

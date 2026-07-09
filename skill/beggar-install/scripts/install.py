@@ -28,10 +28,10 @@ import urllib.request
 import tarfile
 from pathlib import Path
 
-# Release download URL template
-RELEASE_URL = "https://mirrors.tencent.com/repository/generic/npd-public/beggar/releases/v{version}/beggar-v{version}.tar.gz"
-INSTALL_SH_URL = "https://mirrors.tencent.com/repository/generic/npd-public/beggar/install.sh"
-LATEST_VERSION_URL = "https://mirrors.tencent.com/repository/generic/npd-public/beggar/latest-version.txt"
+# Release download URL template (GitHub Releases)
+RELEASE_URL = "https://github.com/jagerzhang/beggar/releases/download/v{version}/beggar-v{version}.tar.gz"
+INSTALL_SH_URL = "https://github.com/jagerzhang/beggar/raw/main/install.sh"
+LATEST_VERSION_URL = "https://github.com/jagerzhang/beggar/releases/latest/download/latest-version.txt"
 
 
 def run(cmd, cwd=None, capture=True):

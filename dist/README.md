@@ -441,4 +441,4 @@ If you installed beggar in **CodeBuddy IDE** (desktop app with web UI), **do not
 
 ## License
 
-Internal use. Maintained by AgentHub team.
+MIT License — see [LICENSE](LICENSE) for details.
