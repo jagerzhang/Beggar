@@ -204,75 +204,36 @@ print(d.get('sendTo', '未知'))
         return 0
     fi
 
-    # Step 3: 检测 Superpowers 插件配置
+    # Step 3: 检测 Superpowers 插件
     echo ""
     print_info "Step 3/7: 检测 Superpowers 插件"
     local superpowers_enabled=false
     local settings_file="$CODEBUDDY_DIR/settings.json"
     if [[ -f "$settings_file" ]]; then
         superpowers_enabled=$(SETTINGS_FILE="$settings_file" "$PYTHON_CMD" -c "
-import json, sys, os
+import json, os
 try:
     with open(os.environ['SETTINGS_FILE']) as f:
         data = json.load(f)
     plugins = data.get('enabledPlugins', {})
-    print('true' if plugins.get('superpowers@codebuddy-plugins-official', False) else 'false')
+    print('true' if any('superpowers' in k and v for k, v in plugins.items()) else 'false')
 except Exception:
     print('false')
 " 2>/dev/null)
     fi
 
     if [[ "$superpowers_enabled" == "true" ]]; then
-        print_info "Superpowers 插件: 已在 settings.json 中启用 ✓"
+        print_info "Superpowers 插件: 已启用 ✓"
         print_info "重启 CodeBuddy Code 后即可加载 Superpowers skills"
     else
-        print_warning "Superpowers 插件未在 settings.json 中启用"
-        print_info "已自动配置：$settings_file"
-        print_info "请重启 CodeBuddy Code 加载插件，或手动执行：${YELLOW}/plugin superpowers${NC}"
-        # 智能注入：如果文件存在则修改，不存在则创建
-        if [[ -f "$settings_file" ]]; then
-            # 记录文件原本存在
-            local checksums_file="$CODEBUDDY_DIR/.beggar-checksums"
-            if [[ -f "$checksums_file" ]]; then
-                _sed_inplace "/^settings.json /d" "$checksums_file" 2>/dev/null || true
-            fi
-            echo "settings.json EXISTED" >> "$checksums_file"
-            SETTINGS_FILE="$settings_file" "$PYTHON_CMD" -c "
-import json, sys, os, tempfile
-try:
-    settings_path = os.environ['SETTINGS_FILE']
-    with open(settings_path, 'r') as f:
-        data = json.load(f)
-    if 'enabledPlugins' not in data:
-        data['enabledPlugins'] = {}
-    data['enabledPlugins']['superpowers@codebuddy-plugins-official'] = True
-    # Atomic write via temp file + rename
-    dir_name = os.path.dirname(settings_path)
-    tmp = tempfile.NamedTemporaryFile(mode='w', dir=dir_name,
-                                      prefix='.', suffix='.tmp', delete=False)
-    try:
-        json.dump(data, tmp, indent=2, ensure_ascii=False)
-        tmp.flush()
-        os.fsync(tmp.fileno())
-    finally:
-        tmp.close()
-    os.replace(tmp.name, settings_path)
-    print('injected')
-except Exception as e:
-    print(f'error: {e}', file=sys.stderr)
-    sys.exit(1)
-" 2>/dev/null && print_info "已注入 Superpowers 配置到现有 settings.json"
-        else
-            cat > "$settings_file" << 'EOF'
-{
-  "enabledPlugins": {
-    "superpowers@codebuddy-plugins-official": true
-  }
-}
-EOF
-            print_info "已创建默认 settings.json"
-            _record_manifest "settings.json"
-        fi
+        print_warning "Superpowers 插件未安装"
+        print_info "Superpowers 是 beggar 推荐的质量实践插件（TDD、系统化调试等）"
+        print_info "请在 CodeBuddy Code 中执行以下命令安装（官方市场）："
+        echo -e "  ${YELLOW}/plugin install superpowers@claude-plugins-official${NC}"
+        print_info "或使用 Superpowers 专属市场："
+        echo -e "  ${YELLOW}/plugin marketplace add obra/superpowers-marketplace${NC}"
+        echo -e "  ${YELLOW}/plugin install superpowers@superpowers-marketplace${NC}"
+        print_info "未安装时工作流仍可运行（Leader 会手动执行等效步骤）"
     fi
 
     # Step 3.5: 注入 Beggar hooks 通知配置

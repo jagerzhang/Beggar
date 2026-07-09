@@ -17,10 +17,10 @@ Reusable multi-agent development configuration for [CodeBuddy Code](https://cnb.
 | [CodeBuddy Code](https://cnb.cool/codebuddy/codebuddy-code) (CLI or IDE) | ✅ Required | — | The host platform. v2.90+ recommended. |
 | Python 3 | ✅ Required | — | For QuickStart wizard, hooks, and state management. Must be in PATH (`python` or `python3`). |
 | curl + tar | ✅ Required | — | For download & extract during installation. Pre-installed on most systems. |
-| [Superpowers](https://github.com/anthropics/superpowers) plugin | ⭐ Recommended | ✅ Auto during `init` | Quality practices (TDD, systematic debugging). Auto-configured in `settings.json`. Workflow functions without it. |
+| [Superpowers](https://github.com/anthropics/superpowers) plugin | ⭐ Recommended | — | Quality practices (TDD, systematic debugging). `init` prints install instructions. Workflow functions without it. |
 | [OpenSpec CLI](https://www.npmjs.com/package/@fission-ai/openspec) | 🔧 Optional | — | beggar already includes built-in `openspec-*` skills. CLI provides `openspec list/archive` convenience commands. Install via `npm install -g @fission-ai/openspec` if desired. |
 
-> 💡 **Tip**: Run `.codebuddy/setup.sh init` after installation — it auto-configures the Superpowers plugin in `settings.json`.
+> 💡 **Tip**: Run `.codebuddy/setup.sh init` after installation — it checks dependencies and prints Superpowers install instructions.
 
 ## Quick Start
 
@@ -309,8 +309,12 @@ This multi-agent system is designed to work with [Superpowers](https://github.co
 
 **Install Superpowers** (recommended):
 ```bash
-# In CodeBuddy Code
-/plugin superpowers
+# In CodeBuddy Code — official marketplace
+/plugin install superpowers@claude-plugins-official
+
+# Or via Superpowers marketplace
+/plugin marketplace add obra/superpowers-marketplace
+/plugin install superpowers@superpowers-marketplace
 ```
 
 If Superpowers is not installed, the workflow still functions — Leader will perform the equivalent steps manually (e.g., self-guided brainstorming instead of `Skill("brainstorming")`).
