@@ -99,9 +99,9 @@ bash scripts/install.py --verify --project-dir "<target-dir>"
 ```
 
 The script checks:
-- All 8 agent `.md` files exist
+- All 10 agent `.md` files exist (architect, coder-senior, coder-standard, coder-lite, reviewer, reviewer-b, tester, recorder, goal-evaluator, director)
 - `subagent_type` mappings are correct
-- `models.json` is valid JSON
+- `beggar-models.json` is valid JSON
 - `persona-active.json` exists
 - `.beggar-platform` marker is set
 

@@ -274,18 +274,19 @@ def verify_installation(project_dir):
 
     # Check required files
     required_files = [
-        "setup.sh", "VERSION", "models.json",
+        "setup.sh", "VERSION", "beggar-models.json",
         "agents/architect.md", "agents/coder-senior.md", "agents/coder-standard.md",
         "agents/coder-lite.md", "agents/reviewer.md", "agents/reviewer-b.md",
         "agents/tester.md", "agents/recorder.md", "agents/goal-evaluator.md",
+        "agents/director.md",
         "skills/beggar-workflow/SKILL.md",
     ]
     for rel_path in required_files:
         if not (codebuddy_dir / rel_path).exists():
             errors.append(f"Missing: {rel_path}")
 
-    # Check models.json validity
-    models_json = codebuddy_dir / "models.json"
+    # Check beggar-models.json validity
+    models_json = codebuddy_dir / "beggar-models.json"
     if models_json.exists():
         try:
             with open(models_json) as f:
@@ -305,6 +306,11 @@ def verify_installation(project_dir):
         has_subagent = "subagent_type" in content
     if not has_subagent:
         errors.append("SKILL.md missing subagent_type references")
+
+    # Check persona-active.json exists
+    persona_file = codebuddy_dir / "persona-active.json"
+    if not persona_file.exists():
+        errors.append("Missing: persona-active.json")
 
     result = {
         "success": len(errors) == 0,
