@@ -246,7 +246,7 @@ EOF
     # 删除 beggar 管理的顶层文件
     local managed_files=(
         "beggar-models.json" "personas.json" "setup.sh"
-        "PERSONAS.md" "MODEL_SELECTION.md" "README.md" "README_CN.md"
+        "PERSONAS.md" "MODEL_SELECTION.md"
         "VERSION" "latest.json" ".gitignore" ".beggar-checksums"
     )
     for file in "${managed_files[@]}"; do
@@ -536,7 +536,7 @@ EOF
 
     local managed_files=(
         "beggar-models.json" "personas.json" "setup.sh"
-        "PERSONAS.md" "MODEL_SELECTION.md" "README.md" "README_CN.md"
+        "PERSONAS.md" "MODEL_SELECTION.md"
         "VERSION" "latest.json" ".gitignore" ".beggar-checksums"
     )
     for file in "${managed_files[@]}"; do

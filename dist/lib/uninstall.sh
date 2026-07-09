@@ -92,7 +92,7 @@ do_uninstall() {
             basename=$(basename "$item")
 
             case "$basename" in
-                agents|tools|VERSION|latest.json|README.md|README_CN.md|.gitignore|.beggar-checksums|docs|persona-active.json)
+                agents|tools|VERSION|latest.json|.gitignore|.beggar-checksums|docs|persona-active.json)
                     core_items+=("$basename")
                     ;;
                 rules)
