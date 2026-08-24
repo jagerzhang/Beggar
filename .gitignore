@@ -1,0 +1,13 @@
+# Local Codex and MCP state must remain per-user and must never enter the plugin repository.
+.codex/
+.codex-home/
+config/mcporter.json
+*.local.json
+*.local.yaml
+*.local.yml
+
+# Generated operating artifacts.
+openspec/changes/
+.pytest_cache/
+__pycache__/
+*.pyc

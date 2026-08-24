@@ -1,0 +1,35 @@
+{
+  "name": "beggar-codex",
+  "version": "0.1.0",
+  "description": "A Codex-native multi-agent engineering workflow with risk-based model routing, evidence-based quality gates, and optional GitHub delivery integration.",
+  "author": {
+    "name": "Beggar contributors"
+  },
+  "keywords": [
+    "beggar",
+    "codex",
+    "multi-agent",
+    "workflow",
+    "github",
+    "pull-request",
+    "quality-gates"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Beggar Codex",
+    "shortDescription": "Risk-aware multi-agent engineering for Codex.",
+    "longDescription": "Beggar turns a software request into a stateful, evidence-driven engineering workflow. It routes clear low-risk tasks to a low-cost model, escalates high-risk or failed work, requires real verification, and supports optional GitHub Pull Request delivery.",
+    "developerName": "Beggar contributors",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write",
+      "GitHub"
+    ],
+    "defaultPrompt": [
+      "Use Beggar to implement this request",
+      "Route this task by risk and verify the result",
+      "Review the current change and prepare a GitHub PR"
+    ]
+  }
+}

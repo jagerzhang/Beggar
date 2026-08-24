@@ -1,0 +1,20 @@
+{
+  "name": "beggar-codex",
+  "interface": {
+    "displayName": "Beggar Codex"
+  },
+  "plugins": [
+    {
+      "name": "beggar-codex",
+      "source": {
+        "source": "local",
+        "path": "./plugins/beggar-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
