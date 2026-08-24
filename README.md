@@ -1,12 +1,12 @@
-# Beggar Codex
+# Cyber Beggar · Beggar Codex
 
 [中文文档](README_CN.md)
 
-Beggar Codex is a Codex-native multi-agent software engineering workflow. It routes work by risk, uses the least expensive model that is appropriate for the task, and escalates only when evidence shows that more reasoning or stronger verification is needed.
+Cyber Beggar (Beggar Codex, 赛博·乞丐) is a Codex-native multi-agent software engineering workflow. It routes work by risk, uses the least expensive model that is appropriate for the task, and escalates only when evidence shows that more reasoning or stronger verification is needed.
 
 Beggar is designed as a platform-neutral core with optional delivery adapters. This public edition does not depend on Tencent-only services, Gongfeng, Knot, or internal MCP clients. GitHub is the default delivery target.
 
-## Why Beggar exists
+## Why Cyber Beggar exists
 
 A single powerful agent may spend the same reasoning budget on a one-line configuration change and a production migration. A fixed multi-agent pipeline has the opposite problem: it runs every stage even when the task is trivial.
 
@@ -110,8 +110,8 @@ Platform authentication failures stop GitHub operations but do not invalidate lo
 ### From a GitHub marketplace checkout
 
 ```bash
-git clone https://github.com/<owner>/beggar-codex.git
-cd beggar-codex
+git clone https://github.com/jagerzhang/Beggar-Codex.git
+cd Beggar-Codex
 codex plugin marketplace add .
 codex plugin add beggar-codex@beggar-codex
 ```
@@ -137,7 +137,7 @@ The core routing and quality gates work without these optional dependencies.
 ## Repository layout
 
 ```text
-beggar-opensource/
+Beggar-Codex/
 ├── .agents/plugins/marketplace.json
 ├── plugins/beggar-codex/
 │   ├── .codex-plugin/plugin.json
@@ -149,4 +149,4 @@ beggar-opensource/
 
 ## License and contributions
 
-This staging copy does not yet declare a public license. Add an approved license, contribution guide, security policy, and maintainer information before publishing to GitHub.
+This repository is released under the MIT License. Contributions are welcome; please include tests and update the relevant documentation when changing workflow behavior.

@@ -16,9 +16,9 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Beggar Codex",
+    "displayName": "Cyber Beggar · Beggar Codex",
     "shortDescription": "Risk-aware multi-agent engineering for Codex.",
-    "longDescription": "Beggar turns a software request into a stateful, evidence-driven engineering workflow. It routes clear low-risk tasks to a low-cost model, escalates high-risk or failed work, requires real verification, and supports optional GitHub Pull Request delivery.",
+    "longDescription": "Cyber Beggar (Beggar Codex, 赛博·乞丐) turns a software request into a stateful, evidence-driven engineering workflow. It routes clear low-risk tasks to a low-cost model, escalates high-risk or failed work, requires real verification, and supports optional GitHub Pull Request delivery.",
     "developerName": "Beggar contributors",
     "category": "Productivity",
     "capabilities": [

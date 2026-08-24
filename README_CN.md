@@ -1,12 +1,12 @@
-# Beggar Codex
+# 赛博·乞丐 · Beggar Codex
 
 [English](README.md)
 
-Beggar Codex 是面向 Codex 的原生多智能体研发工作流。它根据任务风险自动选择合适的模型档位，在需要时升级推理能力和验证强度，并通过真实测试证据和独立审查完成质量收口。
+赛博·乞丐（Beggar Codex）是面向 Codex 的原生多智能体研发工作流。它根据任务风险自动选择合适的模型档位，在需要时升级推理能力和验证强度，并通过真实测试证据和独立审查完成质量收口。
 
 开源版采用“平台无关核心 + 可选交付适配器”的设计，不依赖腾讯内部服务、Gongfeng、Knot 或内部 MCP 客户端，默认以 GitHub 作为交付平台。
 
-## 为什么需要 Beggar
+## 为什么需要赛博·乞丐
 
 单个强模型可能会对一行配置修改和一次生产迁移使用相同的推理预算；固定的多智能体流水线则会在简单任务上执行过多阶段。Beggar 采用风险驱动的折中方案：
 
@@ -104,8 +104,8 @@ GitHub 认证失败只阻断平台操作，不影响本地代码读取、测试�
 ## 安装
 
 ```bash
-git clone https://github.com/<owner>/beggar-codex.git
-cd beggar-codex
+git clone https://github.com/jagerzhang/Beggar-Codex.git
+cd Beggar-Codex
 codex plugin marketplace add .
 codex plugin add beggar-codex@beggar-codex
 ```
@@ -130,4 +130,4 @@ codex plugin add beggar-codex@beggar-codex
 
 ## 许可证与贡献
 
-当前 staging 副本尚未声明公共许可证。发布到 GitHub 前，需要增加经过确认的许可证、贡献指南、安全策略和维护者信息。
+本项目采用 MIT License。欢迎贡献代码；修改工作流行为时，请同步补充测试和相关文档。
